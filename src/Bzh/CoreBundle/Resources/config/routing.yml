@@ -3,9 +3,9 @@ home:
     defaults: { _controller: BzhCoreBundle:Core:index }
 
 core_clan:
-    path:     /clan/{slug}
+    path:     /{slug}
     defaults: { _controller: BzhCoreBundle:Core:clan }
     
 players:
-    path:     /clan/{slug}/members
+    path:     /{slug}/members
     defaults: { _controller: BzhCoreBundle:Core:members }
