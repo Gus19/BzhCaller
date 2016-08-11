@@ -1,7 +1,11 @@
 home:
     path:     /
     defaults: { _controller: BzhCoreBundle:Core:index }
+
+core_clan:
+    path:     /clan/{slug}
+    defaults: { _controller: BzhCoreBundle:Core:clan }
     
 players:
-    path:     /players
-    defaults: { _controller: BzhCoreBundle:Core:players }
+    path:     /clan/{slug}/members
+    defaults: { _controller: BzhCoreBundle:Core:members }

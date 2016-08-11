@@ -10,7 +10,6 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Bzh\CoreBundle\Repository\CategoryRepository;
-use Bzh\CoreBundle\Entity\Category;
 use Bzh\CoreBundle\Entity\Clan;
 
 class Clans extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
@@ -42,26 +41,29 @@ class Clans extends AbstractFixture implements OrderedFixtureInterface, Containe
 <p style="text-align:center"><span style="font-size:16px">Bon clash et soyez rigoureux, si vous faites n&#39;importe quoi c&#39;est tout le clan qui perd...</span></p>';
         
         $bhz = new Clan();
-        $bhz->setName("clash bhz");
+        $bhz->setName("clash bzh");
         $bhz->setLevel(9);
         $bhz->setTimer(6);
         $bhz->setType(1);
         $bhz->setDescription($description);
+        $bhz->setTag("#2GL2GPC9");
         $em->persist($bhz);
         
         $skol = new Clan();
-        $skol->setName("Skol Clash Bhz");
+        $skol->setName("Skol Clash Bzh");
         $skol->setLevel(6);
         $skol->setTimer(6);
         $skol->setType(1);
         $skol->setDescription($description);
+        $skol->setTag("#9QPYC90P");
         $em->persist($skol);
         
-        /*$kwroyal = new Clan();
-        $kwroyal->setName("Kw royal");
-        $kwroyal->setLevel(10);
-        $kwroyal->setType(2);
-        $em->persist($kwroyal);*/
+        $vsclan = new Clan();
+        $vsclan->setName("HASBÜNALLAH");
+        $vsclan->setLevel(5);
+        $vsclan->setType(2);
+        $vsclan->setTag("#999LQYP8");
+        $em->persist($vsclan);
         
         $em->flush();
     }

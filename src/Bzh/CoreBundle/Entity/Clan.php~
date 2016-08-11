@@ -1,14 +1,17 @@
 <?php
 
-namespace CoreBundle\Entity;
+namespace Bzh\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * Clan
  *
  * @ORM\Table(name="clan")
- * @ORM\Entity(repositoryClass="CoreBundle\Repository\ClanRepository")
+ * @ORM\Entity(repositoryClass="Bzh\CoreBundle\Repository\ClanRepository")
  */
 class Clan
 {
@@ -24,14 +27,28 @@ class Clan
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+    
+    /**
+     * @var string
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
 
     /**
      * @var int
      *
      * @ORM\Column(name="level", type="integer")
+     * 
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 15,
+     *      minMessage = "Valeur minimale {{ limit }}",
+     *      maxMessage = "Valeur maximale {{ limit }}"
+     *)
      */
     private $level;
 
@@ -45,7 +62,7 @@ class Clan
     /**
      * @var int
      *
-     * @ORM\Column(name="timer", type="integer")
+     * @ORM\Column(name="timer", type="integer", nullable=true)
      */
     private $timer;
 
@@ -70,6 +87,13 @@ class Clan
      * @ORM\Column(name="type", type="integer")
      */
     private $type;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tag", type="string", length=255)
+     */
+    private $tag;
 
     public function __construct()
     {
@@ -228,5 +252,55 @@ class Clan
     public function getDateMaj()
     {
         return $this->dateMaj;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * 1 = Clan BHZ
+     * 2 = Clan ennemi
+     * @return Clan
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     * 1 = Clan BHZ
+     * 2 = Clan ennemi
+     * @return integer
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set tag
+     *
+     * @param string $tag
+     *
+     * @return Clan
+     */
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Get tag
+     *
+     * @return string
+     */
+    public function getTag()
+    {
+        return $this->tag;
     }
 }

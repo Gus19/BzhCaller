@@ -7,7 +7,7 @@ services:
     war.dates.calc:
         class: Bzh\WarBundle\Services\CalcDateTime
     
-    oc_platform.twig.antispam_extension:
+    war.dates.twig.extension:
         class: Bzh\WarBundle\Twig\CalcDateTimeExtension
         arguments:
             - "@war.dates.calc"

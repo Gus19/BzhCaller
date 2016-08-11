@@ -7,6 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
+    token_api_clash: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6Ijg5OWNiNDM3LWZmZDQtNGZkNS1iZDNkLTI2MzlhYzRiZmI4NiIsImlhdCI6MTQ3MDkxMjQzMSwic3ViIjoiZGV2ZWxvcGVyLzRlZTViYzAwLTU4M2ItMDM5NS0yZTA1LTQwYzYwYjgxOWJmOSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjg5LjMuMjM4LjExIl0sInR5cGUiOiJjbGllbnQifV19.SN9zgXc2yHIyZTzAmvTw2mM7OMsj9ocTX5g11XpSqjlegdgfTFdcHk4UEf7Lp0kJJ3pwaVX9Ph4qiXuKh0bc2g
 
 framework:
     #esi:             ~

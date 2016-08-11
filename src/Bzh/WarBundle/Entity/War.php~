@@ -1,6 +1,6 @@
 <?php
 
-namespace WarBundle\Entity;
+namespace Bzh\WarBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * War
  *
  * @ORM\Table(name="war")
- * @ORM\Entity(repositoryClass="WarBundle\Repository\WarRepository")
+ * @ORM\Entity(repositoryClass="Bzh\WarBundle\Repository\WarRepository")
  */
 class War
 {
@@ -64,14 +64,19 @@ class War
     private $dateMaj;
     
     /**
-     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Clan", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Bzh\CoreBundle\Entity\Clan", cascade={"persist"})
      */
     private $bzhClan;
     
     /**
-     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Clan", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Bzh\CoreBundle\Entity\Clan", cascade={"persist"})
      */
     private $vsClan;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Bzh\WarBundle\Entity\Target", mappedBy="war", cascade={"persist", "remove"})
+    */
+    protected $targets;
     
     public function __construct()
     {
@@ -236,11 +241,11 @@ class War
     /**
      * Set bzhClan
      *
-     * @param \CoreBundle\Entity\Clan $bzhClan
+     * @param \Bzh\CoreBundle\Entity\Clan $bzhClan
      *
      * @return War
      */
-    public function setBzhClan(\CoreBundle\Entity\Clan $bzhClan = null)
+    public function setBzhClan(\Bzh\CoreBundle\Entity\Clan $bzhClan = null)
     {
         $this->bzhClan = $bzhClan;
 
@@ -250,7 +255,7 @@ class War
     /**
      * Get bzhClan
      *
-     * @return \CoreBundle\Entity\Clan
+     * @return \Bzh\CoreBundle\Entity\Clan
      */
     public function getBzhClan()
     {
@@ -260,11 +265,11 @@ class War
     /**
      * Set vsClan
      *
-     * @param \CoreBundle\Entity\Clan $vsClan
+     * @param \Bzh\CoreBundle\Entity\Clan $vsClan
      *
      * @return War
      */
-    public function setVsClan(\CoreBundle\Entity\Clan $vsClan = null)
+    public function setVsClan(\Bzh\CoreBundle\Entity\Clan $vsClan = null)
     {
         $this->vsClan = $vsClan;
 
@@ -274,10 +279,44 @@ class War
     /**
      * Get vsClan
      *
-     * @return \CoreBundle\Entity\Clan
+     * @return \Bzh\CoreBundle\Entity\Clan
      */
     public function getVsClan()
     {
         return $this->vsClan;
+    }
+
+    /**
+     * Add target
+     *
+     * @param \Bzh\WarBundle\Entity\Target $target
+     *
+     * @return War
+     */
+    public function addTarget(\Bzh\WarBundle\Entity\Target $target)
+    {
+        $this->targets[] = $target;
+
+        return $this;
+    }
+
+    /**
+     * Remove target
+     *
+     * @param \Bzh\WarBundle\Entity\Target $target
+     */
+    public function removeTarget(\Bzh\WarBundle\Entity\Target $target)
+    {
+        $this->targets->removeElement($target);
+    }
+
+    /**
+     * Get targets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTargets()
+    {
+        return $this->targets;
     }
 }

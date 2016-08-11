@@ -1,4 +1,6 @@
 services:
-#    core.example:
-#        class: CoreBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    api.clash:
+        class: Bzh\CoreBundle\Services\GetDatasClashOfClans
+        arguments:
+            - %token_api_clash%
+            - "https://api.clashofclans.com/v1/"

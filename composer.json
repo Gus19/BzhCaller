@@ -28,7 +28,8 @@
         "leafo/scssphp": "~0.6",
         "patchwork/jsqueeze": "~1.0",
         "coresphere/console-bundle": "~0.4",
-        "egeloen/ckeditor-bundle": "^4.0"
+        "egeloen/ckeditor-bundle": "^4.0",
+        "mashape/unirest-php": "^3.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

@@ -285,4 +285,38 @@ class War
     {
         return $this->vsClan;
     }
+
+    /**
+     * Add target
+     *
+     * @param \Bzh\WarBundle\Entity\Target $target
+     *
+     * @return War
+     */
+    public function addTarget(\Bzh\WarBundle\Entity\Target $target)
+    {
+        $this->targets[] = $target;
+
+        return $this;
+    }
+
+    /**
+     * Remove target
+     *
+     * @param \Bzh\WarBundle\Entity\Target $target
+     */
+    public function removeTarget(\Bzh\WarBundle\Entity\Target $target)
+    {
+        $this->targets->removeElement($target);
+    }
+
+    /**
+     * Get targets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTargets()
+    {
+        return $this->targets;
+    }
 }

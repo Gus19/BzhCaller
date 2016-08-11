@@ -1,0 +1,9 @@
+{% extends "BzhCoreBundle::layout.html.twig" %}
+
+{% block body %}
+    <h2>{{ clan.name }}</h2>
+    <small>{{ clan.tag }}</small>
+    
+    {{ dump(json) }}
+    
+{% endblock %}
