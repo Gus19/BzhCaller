@@ -2,4 +2,4 @@ _assetic:
     resource: .
     type: assetic
 _app:
-    resource: /Users/Julien/Projects/Heroku/BzhCaller/app/config/routing_dev.yml
+    resource: 'C:\Users\jalbinet\Documents\Projets\BzhCaller\app/config/routing_dev.yml'
