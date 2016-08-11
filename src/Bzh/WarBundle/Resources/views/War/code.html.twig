@@ -1,0 +1,129 @@
+{% extends "BzhCoreBundle::layout.html.twig" %}
+
+{% block body %}
+    
+    {# Exemple sans timer : http://www.clashcaller.com/war/jdfxj 
+    {# Exemple avec timer : http://www.clashcaller.com/war/undkb #}
+    
+    <h3>{{ war.bzhClan.name }} vs {{ war.vsClan.name }}</h3>
+    
+    <div class="row" style="color:grey">
+        <p class="center col-md-4">
+            Code : {{ war.code }}
+        </p>
+        <p class="center col-md-4">
+            Début : {{ war.dateStart|date('d/m/Y H:i') }}
+            {% if timeBejoreStart %}
+                (<span class="prepday">{{ textDiff(timeBejoreStart) }}</span>)
+            {% endif %}
+        </p>
+        <p class="center col-md-4">
+            Fin : {{ war.dateEnd|date('d/m/Y H:i') }}
+            {% if timeBejoreEnd and not timeBejoreStart %}
+                (<span class="warday">{{ textDiff(timeBejoreEnd) }}</span>)
+            {% endif %}
+        </p>
+    </div>
+    
+    {{ include("BzhWarBundle:War:clanDescription.html.twig") }}
+    
+    {% for t in targets %}
+         <p class="center target">
+            <img class="comment" src="{{ asset('bundles/bzhwar/img/note.png') }}" onclick="addComment({{ t.id }})"/>
+            <img class="hdv" src="{{ asset('bundles/bzhwar/img/hdv' ~ t.hdv ~ '.png') }}" title="HDV {{ t.hdv }}" onclick="changeHdv({{ t.id }})"/>
+            <span class="big text-muted">{{ t.position }}.</span>
+            <img src="{{ asset('bundles/bzhwar/img/add.png') }}" onclick="addReservation({{ t.id }})"/>
+        </p>
+    {% endfor %}
+    
+    {{ include("BzhWarBundle:War:targetComment.html.twig") }}
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 'bundles/bzhwar/js/war.js' %}
+      <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}    
+
+{% block twigjs %}
+<script type="text/javascript">    
+    function addComment(targetid) {
+        alert('addComment ' + targetid);
+    }
+    function changeHdv(targetid) {
+        alert('changeHdv ' + targetid);
+    }
+    function addReservation(targetid) {
+        alert('addReservation ' + targetid);
+    }
+    
+    var dateStart = '{{ war.dateStart|date('Y-m-d H:i:s') }}';
+    var dateEnd = '{{ war.dateEnd|date('Y-m-d H:i:s') }}';
+    
+    function countdownStart() {
+        countdown(dateStart, '.prepday');
+    }
+    function countdownEnd() {
+        countdown(dateEnd, '.warday');
+    }
+    
+    function countdown(dateStr, className) {
+      var a=dateStr.split(" ");
+      var d=a[0].split("-");
+      var t=a[1].split(":");
+      eventDate = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
+      
+      if(!eventDate) {
+        return;
+      }
+      // now
+      var currentDate = new Date();
+
+      if(currentDate >= eventDate) {
+        return;
+      }
+
+      // get date diff *in milliseconds*
+      var diff =  eventDate.getTime() - currentDate.getTime();
+
+      // compute days left
+      // 24h * 60m * 60s * 1000 = 86400000
+      var days = String(Math.floor(diff / 86400000));
+      diff = diff % 86400000;
+
+      // compute hours left
+      // 60m * 60s * 1000 = 3600000
+      var hours =  padLeft(String(Math.floor(diff / 3600000)),2);
+      diff = diff % 3600000;
+
+      // the same for minutes
+      var minutes = padLeft(String(Math.floor(diff / 60000)),2);
+      diff = diff % 60000;
+
+      // finally, seconds
+      var seconds = padLeft(String(Math.floor(diff / 1000)),2);
+
+      //console.log(days + 'd' + ' ' + padLeft(hours,2) + 'h' + ' ' + padLeft(minutes,2) + 'm' + ' ' + padLeft(seconds,2) + 's');
+
+      if(hours == 0) {
+        $(className).html(padLeft(minutes,2) + 'M');
+      }
+      else {
+        $(className).html(padLeft(hours,2) + 'H' + ' ' + padLeft(minutes,2) + 'M');
+      }
+    }
+
+    $( document ).ready(function() {
+      countdownStart();
+      setInterval(countdownStart, 1000);
+      countdownEnd();
+      setInterval(countdownEnd, 1000);
+    });
+    
+    function padLeft(nr, n, str) {
+        return Array(n-String(nr).length+1).join(str||'0')+nr;
+    }
+</script>
+{% endblock %}

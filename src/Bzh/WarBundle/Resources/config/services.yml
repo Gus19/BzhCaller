@@ -1,0 +1,15 @@
+services:
+    
+    war.targets.create:
+        class: Bzh\WarBundle\Services\CreateTargets
+        arguments: [ "@doctrine.orm.entity_manager" ]
+        
+    war.dates.calc:
+        class: Bzh\WarBundle\Services\CalcDateTime
+    
+    oc_platform.twig.antispam_extension:
+        class: Bzh\WarBundle\Twig\CalcDateTimeExtension
+        arguments:
+            - "@war.dates.calc"
+        tags:
+            -  { name: twig.extension }

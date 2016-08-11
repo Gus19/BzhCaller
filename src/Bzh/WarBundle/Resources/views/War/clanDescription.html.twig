@@ -1,0 +1,21 @@
+<div class="center noclash" id="context" data-toggle="context" data-target="#context-menu">
+    {{ war.bzhClan.description|raw }}
+</div>
+
+<div id="context-menu">
+    <a href="#" class="btn btn-default center dropdown-menu" role="menu" onclick="$('#clandescription').jqmShow();">
+        Modifier
+    </a>
+</div>
+
+<div id="clandescription" class="jqmWindow center">
+    <h4>Message de clan</h4>
+    {{ form_start(description, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(description) }}
+    {{ form_widget(description.description) }}
+    <br />
+    {{ form_widget(description.enregistrer) }}
+    {{ form_widget(description.fermer) }}
+    {{ form_rest(description) }}
+    {{ form_end(description) }}
+</div>

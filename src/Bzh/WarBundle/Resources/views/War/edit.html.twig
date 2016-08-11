@@ -1,0 +1,22 @@
+{% extends "BzhCoreBundle::layout.html.twig" %}
+
+{% block body %}
+    <h3>Modification de la guerre contre <a href="{{ path('war_code', {'code':war.code }) }}">{{ war.vsClan.name }}</a></h3>
+
+    <div class="well">
+        {{ form(form) }}
+    </div>
+{% endblock %}
+
+
+{% block twigjs %}
+<script type="text/javascript">
+    $( document ).ready(function() {
+        $( "#war_size" ).change(function() {
+            if(!confirm("Attention, changer le nombre de joueurs supprimera toutes les valeurs. Souhaitez-vous continuer ?")) {
+                $( "#war_size" ).val( {{ war.size }});
+            }
+        });
+    });
+</script>
+{% endblock %}

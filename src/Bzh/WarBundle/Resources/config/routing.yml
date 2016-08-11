@@ -1,0 +1,19 @@
+war_new:
+    path:     /new
+    defaults: { _controller: BzhWarBundle:War:new }
+
+war_history:
+    path:     /history
+    defaults: { _controller: BzhWarBundle:War:history }
+
+war_code:
+    path:     /{code}
+    defaults: { _controller: BzhWarBundle:War:code }
+    
+war_edit:
+    path:     /{code}/edit
+    defaults: { _controller: BzhWarBundle:War:edit }
+
+war_delete:
+    path:     /{code}/delete
+    defaults: { _controller: BzhWarBundle:War:delete }

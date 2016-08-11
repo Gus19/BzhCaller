@@ -1,0 +1,7 @@
+home:
+    path:     /
+    defaults: { _controller: BzhCoreBundle:Core:index }
+    
+players:
+    path:     /players
+    defaults: { _controller: BzhCoreBundle:Core:players }

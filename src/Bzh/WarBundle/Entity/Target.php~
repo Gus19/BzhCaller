@@ -1,0 +1,230 @@
+<?php
+
+namespace WarBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Target
+ *
+ * @ORM\Table(name="target")
+ * @ORM\Entity(repositoryClass="WarBundle\Repository\TargetRepository")
+ */
+class Target
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="WarBundle\Entity\War", cascade={"persist"})
+     */
+    private $war;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="hdv", type="integer", nullable=true)
+     */
+    private $hdv;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="text", nullable=true)
+     */
+    private $comment;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="stars", type="integer", nullable=true)
+     */
+    private $stars;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_creation", type="datetime")
+     */
+    private $dateCreation;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_maj", type="datetime", nullable=true)
+     */
+    private $dateMaj;
+
+    public function __construct()
+    {
+        $this->dateCreation = new \Datetime();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     *
+     * @return Target
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set hdv
+     *
+     * @param integer $hdv
+     *
+     * @return Target
+     */
+    public function setHdv($hdv)
+    {
+        $this->hdv = $hdv;
+
+        return $this;
+    }
+
+    /**
+     * Get hdv
+     *
+     * @return int
+     */
+    public function getHdv()
+    {
+        return $this->hdv;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     *
+     * @return Target
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Set stars
+     *
+     * @param integer $stars
+     *
+     * @return Target
+     */
+    public function setStars($stars)
+    {
+        $this->stars = $stars;
+
+        return $this;
+    }
+
+    /**
+     * Get stars
+     *
+     * @return int
+     */
+    public function getStars()
+    {
+        return $this->stars;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Target
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
+
+    /**
+     * Set dateMaj
+     *
+     * @param \DateTime $dateMaj
+     *
+     * @return Target
+     */
+    public function setDateMaj($dateMaj)
+    {
+        $this->dateMaj = $dateMaj;
+
+        return $this;
+    }
+
+    /**
+     * Get dateMaj
+     *
+     * @return \DateTime
+     */
+    public function getDateMaj()
+    {
+        return $this->dateMaj;
+    }
+}
+

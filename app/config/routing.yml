@@ -1,0 +1,23 @@
+bzh_stats:
+    resource: "@BzhStatsBundle/Resources/config/routing.yml"
+    prefix:   /stats
+
+bzh_war:
+    resource: "@BzhWarBundle/Resources/config/routing.yml"
+    prefix:   /war
+
+core:
+    resource: "@BzhCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+#core:
+#    resource: "@CoreBundle/Resources/config/routing.yml"
+#    prefix:   /
+    
+#war:
+#    resource: "@WarBundle/Resources/config/routing.yml"
+#    prefix:   /war
+    
+#stats:
+#    resource: "@StatsBundle/Resources/config/routing.yml"
+#    prefix:   /stats

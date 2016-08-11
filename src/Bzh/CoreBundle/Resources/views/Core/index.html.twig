@@ -1,0 +1,42 @@
+{% extends "BzhCoreBundle::layout.html.twig" %}
+
+{% block body %}
+
+<p class="center">
+    Planification de guerre pour les clans <i>clash bzh</i> et <i>Skol Clash Bzh</i>
+</p>
+
+{% for c in clans %}
+    <p class="center">
+        <a href="{{ path('war_code', {'code':'1234'}) }}" class="w400 btn btn-danger">
+            Guerre en cours <i>{{ c.name }}</i>
+        </a>
+    <p>
+{% endfor %}
+    
+
+<p class="center">
+    <a href="{{ path('war_new') }}" class="w400 btn btn-primary">
+      Nouvelle guerre
+    </a>
+<p>
+
+<p class="center">
+    <a href="{{ path('war_history') }}" class="w400 btn btn-info">
+      Anciennes guerres
+    </a>
+<p>
+    
+<p class="center">
+    <a href="{{ path('stats_home') }}" class="w400 btn btn-warning">
+      Statistiques
+    </a>
+</p>
+
+{#<p class="center">
+    <a href="{{ path('players') }}" class="w400 btn btn-default">
+      Liste des joueurs
+    </a>
+</p>#}
+
+{% endblock %}
