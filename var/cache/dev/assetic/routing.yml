@@ -1,5 +1,0 @@
-_assetic:
-    resource: .
-    type: assetic
-_app:
-    resource: 'C:\Users\jalbinet\Documents\Projets\BzhCaller\app/config/routing_dev.yml'
