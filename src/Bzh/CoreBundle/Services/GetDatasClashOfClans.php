@@ -4,6 +4,9 @@ namespace Bzh\CoreBundle\Services;
 
 use \Symfony\Component\Intl\Exception\NotImplementedException;
 
+/**
+* Nom du service : api.clash
+*/
 class GetDatasClashOfClans {
     private $token;
     private $url;
