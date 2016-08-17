@@ -42,8 +42,6 @@ class BzhApiclashCommand extends ContainerAwareCommand
                 $output->writeln('<error>Mode non pris en charge</error>');
             break;
         }
-      
-        $output->writeln('Command result :' . $json);
     }
 
 }

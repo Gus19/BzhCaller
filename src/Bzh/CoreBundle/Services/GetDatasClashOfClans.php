@@ -43,8 +43,14 @@ class GetDatasClashOfClans {
             'Accept' => 'application/json',
             'authorization' => 'Bearer ' . $this->token
         );
-        $response = \Unirest\Request::get($requestUrl, $headers);
         
+        try{
+          $response = \Unirest\Request::get($requestUrl, $headers);        
+        }
+        catch(\Unirest\Exception $e) {
+          \Unirest\Request::verifyPeer(false);
+          $response = \Unirest\Request::get($requestUrl, $headers);        
+        }
         // Display the result
         return $response->body;
     }
