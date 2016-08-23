@@ -78,6 +78,12 @@ class CoreController extends Controller
         ));
     }
     
+    public function statsAction(Clan $clan) {
+        return $this->render('BzhCoreBundle:Core:stats.html.twig', array(
+            'clan' => $clan
+        ));
+    }
+    
     
 
 }

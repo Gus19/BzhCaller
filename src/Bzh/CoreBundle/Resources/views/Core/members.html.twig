@@ -3,5 +3,9 @@
 {% block body %}
     <h2>Liste des joueurs de {{ clan.name }}</h2>
     
-    {{ dump(json) }}
+    <p>Encore en construction ... </p>
+    
+    {% if app.debug %}
+        {{ dump(json) }}
+    {% endif %}
 {% endblock %}

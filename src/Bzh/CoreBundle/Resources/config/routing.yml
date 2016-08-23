@@ -6,12 +6,16 @@ clan:
     path:     /{slug}
     defaults: { _controller: BzhCoreBundle:Core:clan }
     
-clan_players:
+clan_members:
     path:     /{slug}/members
     defaults: { _controller: BzhCoreBundle:Core:members }
     
 clan_warlog:
     path:     /{slug}/warlog
     defaults: { _controller: BzhCoreBundle:Core:warlog }
+    
+clan_stats:
+    path:     /{slug}/stats
+    defaults: { _controller: BzhCoreBundle:Core:stats }
     
     

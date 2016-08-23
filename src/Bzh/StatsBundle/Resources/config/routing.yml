@@ -1,3 +1,0 @@
-stats_home:
-    path:     /
-    defaults: { _controller: BzhStatsBundle:Stats:index }

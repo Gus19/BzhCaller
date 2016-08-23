@@ -11,7 +11,7 @@
         <a href="{{ path('war_code', {'code':w.code}) }}" class="w400 btn btn-danger">
             Guerre en cours <i>{{ w.bzhClan.name }}</i>
         </a>
-    <p>
+    </p>
 {% endfor %}
     
 
@@ -19,21 +19,32 @@
     <a href="{{ path('war_new') }}" class="w400 btn btn-primary">
       Nouvelle guerre
     </a>
-<p>
+</p>
 
 {% for c in clans %}
     <p class="center col-md-4 col-md-offset-4">
         <a href="{{ path('clan_warlog', {'slug':c.slug}) }}" class="w400 btn btn-info">
           Historique {{ c.name }}
         </a>
-    <p>
+    </p>
 {% endfor %}
 
-<p class="center col-md-4 col-md-offset-4">
-    <a href="{{ path('stats_home') }}" class="w400 btn btn-warning">
-      Statistiques
-    </a>
-</p>
+{% for c in clans %}
+    <p class="center col-md-4 col-md-offset-4">
+        <a href="{{ path('clan_stats', {'slug':c.slug}) }}" class="w400 btn btn-warning">
+          Statistiques {{ c.name }}
+        </a>
+    </p>
+{% endfor %}
+
+{% for c in clans %}
+    <p class="center col-md-4 col-md-offset-4">
+        <a href="{{ path('clan_members', {'slug':c.slug}) }}" class="w400 btn btn-default">
+          Joueurs {{ c.name }}
+        </a>
+    </p>
+{% endfor %}
+
 
 {#<p class="center">
     <a href="{{ path('players') }}" class="w400 btn btn-default">
