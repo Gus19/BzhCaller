@@ -76,7 +76,38 @@ class War
     /**
     * @ORM\OneToMany(targetEntity="Bzh\WarBundle\Entity\Target", mappedBy="war", cascade={"persist", "remove"})
     */
-    protected $targets;
+    private $targets;
+    
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $starsBzh = 0;
+    
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $starsVs = 0;
+    
+    /**
+     * @var decimal
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $destructionBzh = 0;
+    
+    /**
+     * @var decimal
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $destructionVs = 0;
+    
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=1, nullable=true)
+     */
+    
+    private $result;
     
     public function __construct()
     {
@@ -245,7 +276,7 @@ class War
      *
      * @return War
      */
-    public function setBzhClan(\Bzh\CoreBundle\Entity\Clan $bzhClan = null)
+    public function setBzhClan(\Bzh\CoreBundle\Entity\Clan $bzhClan)
     {
         $this->bzhClan = $bzhClan;
 
@@ -269,7 +300,7 @@ class War
      *
      * @return War
      */
-    public function setVsClan(\Bzh\CoreBundle\Entity\Clan $vsClan = null)
+    public function setVsClan(\Bzh\CoreBundle\Entity\Clan $vsClan)
     {
         $this->vsClan = $vsClan;
 
@@ -318,5 +349,128 @@ class War
     public function getTargets()
     {
         return $this->targets;
+    }
+
+    /**
+     * Set destructionBzh
+     *
+     * @param string $destructionBzh
+     *
+     * @return War
+     */
+    public function setDestructionBzh($destructionBzh)
+    {
+        $this->destructionBzh = $destructionBzh;
+
+        return $this;
+    }
+
+    /**
+     * Get destructionBzh
+     *
+     * @return string
+     */
+    public function getDestructionBzh()
+    {
+        return $this->destructionBzh;
+    }
+
+    /**
+     * Set destructionVs
+     *
+     * @param string $destructionVs
+     *
+     * @return War
+     */
+    public function setDestructionVs($destructionVs)
+    {
+        $this->destructionVs = $destructionVs;
+
+        return $this;
+    }
+
+    /**
+     * Get destructionVs
+     *
+     * @return string
+     */
+    public function getDestructionVs()
+    {
+        return $this->destructionVs;
+    }
+
+    /**
+     * Set result
+     *
+     * @param string $result [D | V | N]
+     *
+     * @return War
+     */
+    public function setResult($result)
+    {
+        if($result != 'D' && $result != 'V' && $result != 'N') {
+            throw new Exception($result . "n'est pas une valeur authorisée");
+        }
+        $this->result = $result;
+
+        return $this;
+    }
+
+    /**
+     * Get result
+     *
+     * @return string
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
+
+    /**
+     * Set starsBzh
+     *
+     * @param integer $starsBzh
+     *
+     * @return War
+     */
+    public function setStarsBzh($starsBzh)
+    {
+        $this->starsBzh = $starsBzh;
+
+        return $this;
+    }
+
+    /**
+     * Get starsBzh
+     *
+     * @return integer
+     */
+    public function getStarsBzh()
+    {
+        return $this->starsBzh;
+    }
+
+    /**
+     * Set starsVs
+     *
+     * @param integer $starsVs
+     *
+     * @return War
+     */
+    public function setStarsVs($starsVs)
+    {
+        $this->starsVs = $starsVs;
+
+        return $this;
+    }
+
+    /**
+     * Get starsVs
+     *
+     * @return integer
+     */
+    public function getStarsVs()
+    {
+        return $this->starsVs;
     }
 }

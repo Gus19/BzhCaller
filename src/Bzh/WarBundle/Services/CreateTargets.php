@@ -18,7 +18,9 @@ class CreateTargets {
     public function generate(War $war, $number) {
         /* @var $rep TargetRepository */
         $rep = $this->em->getRepository("BzhWarBundle:Target");
-        $targets = $rep->deleteByWar($war);
+        if($war->getId()) {
+            $targets = $rep->deleteByWar($war);
+        }
         
         for ($index = 1; $index <= $number; $index++) {
             $target = new Target();

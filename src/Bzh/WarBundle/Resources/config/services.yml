@@ -1,5 +1,9 @@
 services:
     
+    war.code.new:
+        class: Bzh\WarBundle\Services\CreateWarCode
+        arguments: [4]
+        
     war.targets.create:
         class: Bzh\WarBundle\Services\CreateTargets
         arguments: [ "@doctrine.orm.entity_manager" ]

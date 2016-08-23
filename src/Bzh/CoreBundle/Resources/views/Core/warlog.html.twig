@@ -1,0 +1,54 @@
+{% extends "BzhCoreBundle::layout.html.twig" %}
+
+{# block body %}
+    <h2>Guerres passées de {{ clan.name }}</h2>
+    
+    {{ dump(test) }}
+    
+    {# for f in files %}
+        {{ dump(f) }}
+    {% endfor }
+    
+{% endblock #}
+
+
+{% block body %}
+    <h3>Historique des guerres de {{ clan.name }}</h3>
+    
+    {% for w in wars %}
+        {% set classBzh = '' %}
+        {% set classVs = '' %}
+        
+        {% if w.result == 'V' %}
+            {% set classBzh = 'text-success' %}
+            {% set classVs = 'text-danger' %}
+        {% elseif w.result == 'D' %}
+            {% set classBzh = 'text-danger' %}
+            {% set classVs = 'text-success' %}
+        {% else %}
+            {% set classBzh = 'text-muted' %}
+            {% set classVs = 'text-muted' %}
+        {% endif %}
+
+        <div class="resultWar">
+            <div class="bzhClan {{ classBzh }}">
+                <p>{{ w.bzhClan.name }}</p>
+                <p class="noclash s15">
+                    {{ w.destructionBzh }}%&nbsp;&nbsp;&nbsp;&nbsp;{{ w.starsBzh }}<i class="glyphicon glyphicon-star-empty"></i>
+                </p>
+            </div>
+            <div class="vs">
+                <p>VS</p>
+                <p class="noclash s15">{{ w.size }} contre {{ w.size }}</p>
+                <a class="noclash s15" href="{{ path('war_code', {'code':w.code}) }}">Détails</a>
+            </div>
+            <div class="vsClan {{ classVs }}">
+                <p>{{ w.vsClan.name }}</p>
+                <p class="noclash s15">
+                    <i class="glyphicon glyphicon-star-empty"></i>{{ w.starsVs }}&nbsp;&nbsp;&nbsp;&nbsp;{{ w.destructionVs }}%
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+    
+{% endblock %}

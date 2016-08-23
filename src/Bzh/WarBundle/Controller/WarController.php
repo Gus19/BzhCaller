@@ -64,6 +64,7 @@ class WarController extends Controller
             $war->setDateEnd($serviceDates->calcDateEnd($timeChoice, $timeTo));
             $vsClan->setName($form->get('vsClanText')->getData());
             $vsClan->setLevel($form->get('vsClanLevel')->getData());
+            $vsClan->setTag($form->get('vsClanTag')->getData());
             $vsClan->setType(2);
             $war->setVsClan($vsClan);
             
@@ -97,6 +98,7 @@ class WarController extends Controller
         $form->get('timeTo')->setData(new \Datetime());
         $form->get('vsClanText')->setData( $vsClan->getName() );
         $form->get('vsClanLevel')->setData( $vsClan->getLevel() );
+        $form->get('vsClanTag')->setData( $vsClan->getTag() );
         
         if ($request->isMethod('POST')) {
             // Avant que l'objet soit hydraté
@@ -116,6 +118,7 @@ class WarController extends Controller
                 
                 $vsClan->setName($form->get('vsClanText')->getData());
                 $vsClan->setLevel($form->get('vsClanLevel')->getData());
+                $vsClan->setTag($form->get('vsClanTag')->getData());
                 $em->flush();
                 
                 return $this->redirectToRoute('war_code', array(
@@ -142,12 +145,4 @@ class WarController extends Controller
         
         return $this->redirectToRoute('home');
     }
-    
-    public function historyAction()
-    {
-        return $this->render('BzhWarBundle:War:history.html.twig', array(
-            // ...
-        ));
-    }
-
 }

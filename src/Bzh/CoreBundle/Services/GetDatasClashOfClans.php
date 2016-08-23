@@ -51,7 +51,7 @@ class GetDatasClashOfClans {
           \Unirest\Request::verifyPeer(false);
           $response = \Unirest\Request::get($requestUrl, $headers);        
         }
-        // Display the result
+        // Retourne le contenu json sous forme de tableau (json decode utilisé dans la méthode)
         return $response->body;
     }
     

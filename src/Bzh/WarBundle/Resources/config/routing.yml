@@ -2,10 +2,6 @@ war_new:
     path:     /new
     defaults: { _controller: BzhWarBundle:War:new }
 
-war_history:
-    path:     /history
-    defaults: { _controller: BzhWarBundle:War:history }
-
 war_code:
     path:     /{code}
     defaults: { _controller: BzhWarBundle:War:code }

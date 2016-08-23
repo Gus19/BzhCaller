@@ -10,4 +10,33 @@ namespace Bzh\WarBundle\Repository;
  */
 class WarRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Retourne les guerres non commencées ou non terminées
+     */
+    public function getCurrentWars() {
+        $qb = $this->createQueryBuilder('w');
+        
+        $qb
+            ->innerJoin("w.bzhClan", "c")->addSelect("c")
+            ->innerJoin("w.vsClan", "v")->addSelect("v")
+            ->where('w.dateEnd > :now')
+            ->setParameter('now', new \Datetime());
+        
+        return $qb->getQuery()->getResult();
+    }
+    
+    /**
+     * Retourne les guerres non commencées ou non terminées
+     */
+    public function getPastWars(\Bzh\CoreBundle\Entity\Clan $clan) {
+        $qb = $this->createQueryBuilder('w');
+        
+        $qb
+            ->andWhere("w.bzhClan = :clan")->setParameter(":clan", $clan)
+            ->innerJoin("w.bzhClan", "c")->addSelect("c")
+            ->innerJoin("w.vsClan", "v")->addSelect("v")
+            ->andWhere('w.dateEnd < :now')->setParameter('now', new \Datetime());
+        
+        return $qb->getQuery()->getResult();
+    }
 }

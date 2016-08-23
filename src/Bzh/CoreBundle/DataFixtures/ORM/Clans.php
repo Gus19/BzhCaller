@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Bzh\CoreBundle\Repository\CategoryRepository;
 use Bzh\CoreBundle\Entity\Clan;
+use Bzh\WarBundle\Entity\War;
 
 class Clans extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
@@ -59,11 +60,52 @@ class Clans extends AbstractFixture implements OrderedFixtureInterface, Containe
         $em->persist($skol);
         
         $vsclan = new Clan();
-        $vsclan->setName("HASBÜNALLAH");
-        $vsclan->setLevel(5);
+        $vsclan->setName("Dell Mazoo");
+        $vsclan->setLevel(10);
         $vsclan->setType(2);
-        $vsclan->setTag("#999LQYP8");
+        $vsclan->setTag("#P22L88V9");
         $em->persist($vsclan);
+        
+        $dateStart = new \DateTime();
+        $dateStart->setDate(2016, 8, 18);
+        $dateStart->setTime(21, 30, 00);
+        
+        $dateEnd = new \DateTime();
+        $dateEnd->setDate(2016, 8, 19);
+        $dateEnd->setTime(21, 30, 00);
+        
+        $war = new War();
+        $war->setBzhClan($skol);
+        $war->setCode( $this->container->get('war.code.new')->generate() );
+        $war->setDateEnd($dateStart);
+        $war->setDateStart($dateEnd);
+        $war->setDestructionBzh(90.65);
+        $war->setDestructionVs(89.75);
+        $war->setResult('V');
+        $war->setSize(20);
+        $war->setStarsBzh(53);
+        $war->setStarsVs(50);
+        $war->setVsClan($vsclan);
+        $this->container->get('war.targets.create')->generate($war, 20);
+        $em->persist($war);
+        
+        $dateStart2 = new \DateTime();
+        $dateStart2->setDate(2016, 8, 20);
+        $dateStart2->setTime(23, 30, 00);
+        
+        $dateEnd2 = new \DateTime();
+        $dateEnd2->setDate(2016, 8, 21);
+        $dateEnd2->setTime(23, 30, 00);
+        
+        $war2 = new War();
+        $war2->setBzhClan($skol);
+        $war2->setCode( $this->container->get('war.code.new')->generate() );
+        $war2->setDateEnd($dateEnd2);
+        $war2->setDateStart($dateStart2);
+        $war2->setSize(10);
+        $war2->setVsClan($vsclan);
+        $this->container->get('war.targets.create')->generate($war2, 10);
+        $em->persist($war2);
         
         $em->flush();
     }

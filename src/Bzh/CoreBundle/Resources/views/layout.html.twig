@@ -9,10 +9,8 @@
   <title>{% block title %}BZH caller{% endblock %}</title>
 
   {% block stylesheets %}
-    {# On charge le CSS de bootstrap depuis le site directement #}
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-    
     {% stylesheets filter="cssrewrite, ?scssphp"
+      'bundles/bzhcore/css/bootstrap.min.css'
       'bundles/bzhcore/css/style.css'
       'bundles/bzhcore/css/jqModal.css'
     %}
@@ -63,11 +61,9 @@
   </div>
 
   {% block javascripts %}
-    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    
     {% javascripts 
+        'bundles/bzhcore/js/jquery.min.js'
+        'bundles/bzhcore/js/bootstrap.min.js'
         'bundles/bzhcore/js/jqModal.js' 
         'bundles/bzhcore/js/bootstrap-contextmenu.js'
     %}

@@ -70,6 +70,10 @@ class WarType extends AbstractType
             ->add('vsClanText', TextType::class, array(
                 'label' => 'Clan ennemi',
                 'mapped' => false
+            ))          
+            ->add('vsClanTag', TextType::class, array(
+                'label' => 'Tag Clan ennemi',
+                'mapped' => false
             ))
             ->add('vsClanLevel', IntegerType::class, array(
                 'label' => 'Niveau clan ennemi',

@@ -6,28 +6,30 @@
     Planification de guerre pour les clans <i>clash bzh</i> et <i>Skol Clash Bzh</i>
 </p>
 
-{% for c in clans %}
-    <p class="center">
-        <a href="{{ path('war_code', {'code':'1234'}) }}" class="w400 btn btn-danger">
-            Guerre en cours <i>{{ c.name }}</i>
+{% for w in wars %}
+    <p class="center col-md-4 col-md-offset-4">
+        <a href="{{ path('war_code', {'code':w.code}) }}" class="w400 btn btn-danger">
+            Guerre en cours <i>{{ w.bzhClan.name }}</i>
         </a>
     <p>
 {% endfor %}
     
 
-<p class="center">
+<p class="center col-md-4 col-md-offset-4">
     <a href="{{ path('war_new') }}" class="w400 btn btn-primary">
       Nouvelle guerre
     </a>
 <p>
 
-<p class="center">
-    <a href="{{ path('war_history') }}" class="w400 btn btn-info">
-      Anciennes guerres
-    </a>
-<p>
-    
-<p class="center">
+{% for c in clans %}
+    <p class="center col-md-4 col-md-offset-4">
+        <a href="{{ path('clan_warlog', {'slug':c.slug}) }}" class="w400 btn btn-info">
+          Historique {{ c.name }}
+        </a>
+    <p>
+{% endfor %}
+
+<p class="center col-md-4 col-md-offset-4">
     <a href="{{ path('stats_home') }}" class="w400 btn btn-warning">
       Statistiques
     </a>
