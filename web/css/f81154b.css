@@ -42,6 +42,7 @@ footer {
 }
 
 .center {
+    position: relative;
     text-align: center;
 }
 
@@ -56,7 +57,8 @@ h2, h3 {
 }
 
 a.w400 {
-    width: 400px;
+    /*min-width: 400px;*/
+    width: 100%;
 }
 
 p.target * {
@@ -90,6 +92,47 @@ p.target .hdv {
 }
 .warday {
     color: red;
+}
+
+.resultWar {
+    width: 100%;
+    border: 1px solid grey;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+.resultWar td {
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 5px;
+}
+.resultWar p {
+    margin: 0;
+    padding: 0;
+}
+.resultWar .bzhClan {
+    text-align: right;
+    width: calc(45% - 11px);
+    display: inline-block;
+    padding: 3px;
+}
+.resultWar .vs {
+    width: 10%;
+    text-align: center;
+    vertical-align: top;
+    display: inline-block;
+    padding: 3px;
+}
+.resultWar .vsClan {
+    text-align: left;
+    width: calc(45% - 11px);
+    display: inline-block;
+    padding: 3px;
+}
+.pointer {
+    cursor: pointer;
+}
+.s15 {
+    font-size: 15px;
 }
 /* jqModal base Styling courtesy of;
 	Brice Burgess <bhb@iceburg.net> */

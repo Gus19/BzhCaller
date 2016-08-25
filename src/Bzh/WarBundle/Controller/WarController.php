@@ -93,9 +93,25 @@ class WarController extends Controller
         $form = $this->get('form.factory')->create(WarType::class, $war);
         
         $vsClan = $war->getVsClan();
+        $now = new \Datetime();
         
-        $form->get('timeChoice')->setData('end');
-        $form->get('timeTo')->setData(new \Datetime());
+        if($now < $war->getDateStart()) {
+            $form->get('timeChoice')->setData('start');
+            $diff = date_diff($now, $war->getDateStart());
+            $form->get('timeTo')->setData( $war->getDateStart()->setTime(0, 0, 0)->add($diff) );
+        }
+        elseif ($now < $war->getDateEnd()) {
+            $form->get('timeChoice')->setData('end');
+            $diff = date_diff($now, $war->getDateEnd());
+            $form->get('timeTo')->setData( $war->getDateEnd()->setTime(0, 0, 0)->add($diff) );
+        }
+        else {
+            $request->getSession()->getFlashBag()->add('info', 'Impossible de modifier une guerre terminée');
+            return $this->redirectToRoute("war_code", array(
+                'code' => $war->getCode()
+            ));
+        }
+        
         $form->get('vsClanText')->setData( $vsClan->getName() );
         $form->get('vsClanLevel')->setData( $vsClan->getLevel() );
         $form->get('vsClanTag')->setData( $vsClan->getTag() );
