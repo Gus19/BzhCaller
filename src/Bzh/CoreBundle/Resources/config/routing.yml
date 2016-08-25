@@ -1,7 +1,11 @@
 home:
     path:     /
     defaults: { _controller: BzhCoreBundle:Core:index }
-
+    
+map:
+    path:     /map
+    defaults: { _controller: BzhCoreBundle:Core:map }
+    
 clan:
     path:     /{slug}
     defaults: { _controller: BzhCoreBundle:Core:clan }

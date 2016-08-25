@@ -26,6 +26,12 @@ class CoreController extends Controller
         ));
     }
     
+    public function mapAction()
+    {
+        return $this->render('BzhCoreBundle:Core:map.html.twig', array(
+        ));
+    }
+    
     public function clanAction(Clan $clan)
     {
         /* @var $service GetDatasClashOfClans */
