@@ -73,9 +73,11 @@
         'bundles/bzhcore/js/bootstrap.min.js'
         'bundles/bzhcore/js/jqModal.js' 
         'bundles/bzhcore/js/bootstrap-contextmenu.js'
+        'bundles/fosjsrouting/js/router.js'
     %}
       <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     
     {% block twigjs %}{% endblock %}
   {% endblock %}

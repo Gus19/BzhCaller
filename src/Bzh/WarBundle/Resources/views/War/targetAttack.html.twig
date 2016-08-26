@@ -1,0 +1,11 @@
+{#<div id="targetcomment{{ target.id }}" class="jqmWindow center">#}
+    <h4>Commentaire cible #{#target.position#}</h4>
+    {{ form_start(formAtt, {'attr': {'id': 'target_attack'}}) }}
+    {{ form_errors(formAtt) }}
+    {{ form_widget(formAtt.name) }}
+    <br />
+    {{ form_widget(formAtt.enregistrer) }}
+    {{ form_widget(formAtt.fermer) }}
+    {{ form_rest(formAtt) }}
+    {{ form_end(formAtt) }}
+{#</div>#}

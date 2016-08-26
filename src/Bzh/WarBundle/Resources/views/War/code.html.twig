@@ -25,19 +25,38 @@
         </p>
     </div>
     
-    {{ include("BzhWarBundle:War:clanDescription.html.twig") }}
+    {{ render(controller("BzhWarBundle:War:clanDescription", {'code': war.code })) }}
     
     {% for t in targets %}
+        
+        {% set color = 'grey' %}
+        {% if t.comment|length > 0 %}
+            {% set color = 'blue' %}
+        {% endif %}
          <p class="center target">
-            <img class="comment" src="{{ asset('bundles/bzhwar/img/note.png') }}" onclick="addComment({{ t.id }})"/>
-            <img class="hdv" src="{{ asset('bundles/bzhwar/img/hdv' ~ t.hdv ~ '.png') }}" title="HDV {{ t.hdv }}" onclick="changeHdv({{ t.id }})"/>
+            {#<img src="{{ asset('bundles/bzhwar/img/note.png') }}" onclick="addComment({{ t.id }}, {{ t.position }}, '{{ t.comment|escape('js') }}')"/>#}
+            <i class="glyphicon glyphicon-comment btn " style="color:{{color}};font-size:22px;" onclick="addComment({{ t.id }}, {{ t.position }}, '{{ t.comment|escape('js') }}')"></i>
+            <img class="hdv" src="{{ asset('bundles/bzhwar/img/hdv' ~ t.hdv ~ '.png') }}" title="HDV {{ t.hdv }}" onclick="changeHdv({{ t.id }}, {{ t.position }})"/>
             <span class="big text-muted">{{ t.position }}.</span>
-            <img src="{{ asset('bundles/bzhwar/img/add.png') }}" onclick="addReservation({{ t.id }})"/>
+            
+            {# if t.attacks|length > 0 #}
+            {% for a in t.attacks %}
+                <span>{{ a.name }}</span>
+            {% endfor %}   
+            {# endif #}
+            
+            <img src="{{ asset('bundles/bzhwar/img/add.png') }}" onclick="addReservation({{ t.id }}, {{ t.position }})"/>
         </p>
+        {# render(controller("BzhWarBundle:War:targetComment", {'id': t.id })) #}
     {% endfor %}
     
-    {{ include("BzhWarBundle:War:targetComment.html.twig") }}
-    
+    <div id="targetcomment" class="jqmWindow center">
+        {{ include("BzhWarBundle:War:targetComment.html.twig") }}
+    </div>
+    <div id="targethdv" class="jqmWindow center"></div>
+    <div id="targetattack" class="jqmWindow center">
+        {{ include("BzhWarBundle:War:targetAttack.html.twig") }}
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -49,14 +68,8 @@
 
 {% block twigjs %}
 <script type="text/javascript">    
-    function addComment(targetid) {
-        alert('addComment ' + targetid);
-    }
     function changeHdv(targetid) {
         alert('changeHdv ' + targetid);
-    }
-    function addReservation(targetid) {
-        alert('addReservation ' + targetid);
     }
     
     var dateStart = '{{ war.dateStart|date('Y-m-d H:i:s') }}';
@@ -67,40 +80,5 @@
     function countdownEnd() {
         countdown(dateEnd, '.warday');
     }
-    
-    function countdown(dateStr, className) {
-      var eventDate = StringToDate(dateStr);
-    
-      if(!eventDate) {
-        return;
-      }
-      
-      var currentDate = new Date();
-      if(currentDate >= eventDate) {
-        location.reload();
-        return;
-      }
-
-      var diff = calcDiff(eventDate.getTime(), currentDate.getTime());
-      
-      if(diff['hours'] == 0) {
-        diff['minutes']++;
-        $(className).html(diff['minutes'] + 'M');
-      }
-      else {
-        $(className).html(diff['hours'] + 'H' + ' ' + padLeft(String(diff['minutes']),2) + 'M');
-      }
-    }
-
-    $( document ).ready(function() {
-      if($('.prepday').size() > 0) {
-        countdownStart();
-        setInterval(countdownStart, 1000);
-      }
-      if($('.warday').size() > 0) {
-        countdownEnd();
-        setInterval(countdownEnd, 1000);
-      }
-    });
 </script>
 {% endblock %}

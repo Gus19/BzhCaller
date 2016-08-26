@@ -1,9 +1,25 @@
 $().ready(function() {
-    $('#clandescription').jqm();
+    if($('.prepday').size() > 0) {
+        countdownStart();
+        setInterval(countdownStart, 1000);
+    }
+    if($('.warday').size() > 0) {
+        countdownEnd();
+        setInterval(countdownEnd, 1000);
+    }
+    
+    $('#clandescription').jqm({ onShow:screenCenter('#clandescription') });
+    $('#targetcomment').jqm({ onShow:screenCenter('#targetcomment') });
+    $('#targetattack').jqm({ onShow:screenCenter('#targetattack') });
 });
 
 function padLeft(nr, n, str) {
     return Array(n-String(nr).length+1).join(str||'0')+nr;
+}
+
+function screenCenter(el) {
+  $(el).css("top", Math.max(0, 30) + "px");
+  $(el).css("left", Math.max(0, (($(window).width() - $(el).outerWidth()) / 2) ) + "px");
 }
 
 function StringToDate(dateStr) {
@@ -34,4 +50,49 @@ function calcDiff(eventDate, currentDate) {
         'minutes': minutes, 
         'seconds': seconds 
     };
+}
+
+function countdown(dateStr, className) {
+    var eventDate = StringToDate(dateStr);
+
+    if(!eventDate) {
+        return;
+    }
+
+    var currentDate = new Date();
+    if(currentDate >= eventDate) {
+        location.reload();
+        return;
+    }
+
+    var diff = calcDiff(eventDate.getTime(), currentDate.getTime());
+
+    if(diff['hours'] == 0) {
+        diff['minutes']++;
+        $(className).html(diff['minutes'] + 'M');
+    }
+    else {
+        $(className).html(diff['hours'] + 'H' + ' ' + padLeft(String(diff['minutes']),2) + 'M');
+    }
+}
+
+/*function addComment(targetid) {
+    $('#targetcomment').jqmShow();
+    $('#targetcomment').html('chargement ...');
+
+    $.get(Routing.generate('war_target_comment', { id: targetid }), function( data ) {
+        $('#targetcomment').html(data);
+    });
+}*/
+function addComment(targetid, position, comment) {
+    $('#target_comment').attr('action', Routing.generate('war_target_comment', { id: targetid }));
+    $('#targetcomment h4').html('Commentaire cible #' + position);
+    $('#target_comment_comment').val(comment);
+    $('#targetcomment').jqmShow();
+}
+
+function addReservation(targetid, position) {
+    $('#target_attack').attr('action', Routing.generate('war_target_attack', { id: targetid }));
+    $('#targetattack h4').html('Réserver cible #' + position);
+    $('#targetattack').jqmShow();
 }

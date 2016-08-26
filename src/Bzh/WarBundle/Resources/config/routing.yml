@@ -13,3 +13,25 @@ war_edit:
 war_delete:
     path:     /{code}/delete
     defaults: { _controller: BzhWarBundle:War:delete }
+    
+war_clan_description:
+    path:     /{code}/clan-description
+    defaults: { _controller: BzhWarBundle:War:clanDescription }
+    
+war_target_comment:
+    path:     /target-comment/{id}
+    defaults: { _controller: BzhWarBundle:War:targetComment }
+    options:
+        expose: true
+        
+war_target_hdv:
+    path:     /target-hdv/{id}
+    defaults: { _controller: BzhWarBundle:War:targetHdv }
+    options:
+        expose: true
+        
+war_target_attack:
+    path:     /target-attack/{id}
+    defaults: { _controller: BzhWarBundle:War:targetAttack }
+    options:
+        expose: true

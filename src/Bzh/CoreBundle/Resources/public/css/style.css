@@ -65,9 +65,9 @@ p.target * {
     vertical-align: middle;
 }
 p.target span.big {
-    font-size: 30px;
+    font-size: 24px;
     display: inline-block;
-    width: 75px;
+    width: 60px;
 }
 p.target img {
     cursor: pointer;
@@ -133,4 +133,7 @@ p.target .hdv {
 }
 .s15 {
     font-size: 15px;
+}
+#targetattack {
+    width: 400px !important;
 }

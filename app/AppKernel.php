@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Bzh\CoreBundle\BzhCoreBundle(),
             new Bzh\WarBundle\BzhWarBundle()
         ];

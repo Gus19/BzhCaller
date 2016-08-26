@@ -12,4 +12,14 @@ class TargetRepository extends \Doctrine\ORM\EntityRepository
         $qb->setParameter('war', $war);
         $qb->getQuery()->execute();
     }
+    
+    public function findTargetsAndAttacksByWar(War $war) {
+        $qb = $this->createQueryBuilder('t');
+        $qb->leftJoin("t.attacks", "a")->addSelect("a");
+        $qb->where('t.war = :war');
+        $qb->setParameter('war', $war);
+        $qb->addOrderBy('t.position');
+        $qb->addOrderBy('a.dateCreation');
+        return $qb->getQuery()->getResult();
+    }
 }

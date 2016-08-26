@@ -67,6 +67,11 @@ class Target
      * @ORM\Column(name="date_maj", type="datetime", nullable=true)
      */
     private $dateMaj;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Bzh\WarBundle\Entity\Attack", mappedBy="target", cascade={"persist", "remove"})
+    */
+    private $attacks;
 
     public function __construct()
     {
@@ -249,5 +254,39 @@ class Target
     public function getWar()
     {
         return $this->war;
+    }
+
+    /**
+     * Add attack
+     *
+     * @param \Bzh\WarBundle\Entity\Target $attack
+     *
+     * @return Target
+     */
+    public function addAttack(\Bzh\WarBundle\Entity\Target $attack)
+    {
+        $this->attacks[] = $attack;
+
+        return $this;
+    }
+
+    /**
+     * Remove attack
+     *
+     * @param \Bzh\WarBundle\Entity\Target $attack
+     */
+    public function removeAttack(\Bzh\WarBundle\Entity\Target $attack)
+    {
+        $this->attacks->removeElement($attack);
+    }
+
+    /**
+     * Get attacks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAttacks()
+    {
+        return $this->attacks;
     }
 }

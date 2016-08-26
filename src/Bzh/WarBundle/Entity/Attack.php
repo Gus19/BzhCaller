@@ -5,12 +5,12 @@ namespace Bzh\WarBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Target
+ * Attack
  *
- * @ORM\Table(name="target")
- * @ORM\Entity(repositoryClass="Bzh\WarBundle\Repository\TargetRepository")
+ * @ORM\Table(name="attack")
+ * @ORM\Entity(repositoryClass="Bzh\CoreBundle\Repository\AttackRepository")
  */
-class Target
+class Attack
 {
     /**
      * @var int
@@ -20,32 +20,18 @@ class Target
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Bzh\WarBundle\Entity\Target", inversedBy="attacks", cascade={"persist"})
+     */
+    private $target;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="Bzh\WarBundle\Entity\War", inversedBy="targets", cascade={"persist"})
-     */
-    private $war;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="position", type="integer")
-     */
-    private $position;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="hdv", type="integer", nullable=true)
-     */
-    private $hdv;
-
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text", nullable=true)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $comment;
+    private $name;
 
     /**
      * @var int
@@ -67,17 +53,19 @@ class Target
      * @ORM\Column(name="date_maj", type="datetime", nullable=true)
      */
     private $dateMaj;
-    
+
     /**
-    * @ORM\OneToMany(targetEntity="Bzh\WarBundle\Entity\Target", mappedBy="target", cascade={"persist", "remove"})
-    */
-    private $attacks;
+     * @var float
+     *
+     * @ORM\Column(name="destruction", type="float", nullable=true)
+     */
+    private $destruction;
 
     public function __construct()
     {
         $this->dateCreation = new \Datetime();
     }
-    
+
     /**
      * Get id
      *
@@ -89,75 +77,27 @@ class Target
     }
 
     /**
-     * Set position
+     * Set name
      *
-     * @param integer $position
+     * @param string $name
      *
-     * @return Target
+     * @return Attack
      */
-    public function setPosition($position)
+    public function setName($name)
     {
-        $this->position = $position;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get position
-     *
-     * @return int
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * Set hdv
-     *
-     * @param integer $hdv
-     *
-     * @return Target
-     */
-    public function setHdv($hdv)
-    {
-        $this->hdv = $hdv;
-
-        return $this;
-    }
-
-    /**
-     * Get hdv
-     *
-     * @return int
-     */
-    public function getHdv()
-    {
-        return $this->hdv;
-    }
-
-    /**
-     * Set comment
-     *
-     * @param string $comment
-     *
-     * @return Target
-     */
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-
-        return $this;
-    }
-
-    /**
-     * Get comment
+     * Get name
      *
      * @return string
      */
-    public function getComment()
+    public function getName()
     {
-        return $this->comment;
+        return $this->name;
     }
 
     /**
@@ -165,7 +105,7 @@ class Target
      *
      * @param integer $stars
      *
-     * @return Target
+     * @return Attack
      */
     public function setStars($stars)
     {
@@ -189,7 +129,7 @@ class Target
      *
      * @param \DateTime $dateCreation
      *
-     * @return Target
+     * @return Attack
      */
     public function setDateCreation($dateCreation)
     {
@@ -213,7 +153,7 @@ class Target
      *
      * @param \DateTime $dateMaj
      *
-     * @return Target
+     * @return Attack
      */
     public function setDateMaj($dateMaj)
     {
@@ -233,26 +173,50 @@ class Target
     }
 
     /**
-     * Set war
+     * Set destruction
      *
-     * @param \Bzh\WarBundle\Entity\War $war
+     * @param float $destruction
      *
-     * @return Target
+     * @return Attack
      */
-    public function setWar(\Bzh\WarBundle\Entity\War $war = null)
+    public function setDestruction($destruction)
     {
-        $this->war = $war;
+        $this->destruction = $destruction;
 
         return $this;
     }
 
     /**
-     * Get war
+     * Get destruction
      *
-     * @return \Bzh\WarBundle\Entity\War
+     * @return float
      */
-    public function getWar()
+    public function getDestruction()
     {
-        return $this->war;
+        return $this->destruction;
+    }
+
+    /**
+     * Set target
+     *
+     * @param \Bzh\WarBundle\Entity\Target $target
+     *
+     * @return Attack
+     */
+    public function setTarget(\Bzh\WarBundle\Entity\Target $target = null)
+    {
+        $this->target = $target;
+
+        return $this;
+    }
+
+    /**
+     * Get target
+     *
+     * @return \Bzh\WarBundle\Entity\Target
+     */
+    public function getTarget()
+    {
+        return $this->target;
     }
 }
