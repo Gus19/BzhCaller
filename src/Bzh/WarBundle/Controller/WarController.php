@@ -10,6 +10,7 @@ use Bzh\WarBundle\Entity\Attack;
 use Bzh\CoreBundle\Entity\Clan;
 use Bzh\WarBundle\Repository\WarRepository;
 use Bzh\WarBundle\Repository\TargetRepository;
+use Bzh\WarBundle\Repository\AttackRepository;
 use Bzh\WarBundle\Form\WarType;
 use Bzh\CoreBundle\Form\ClanDescriptionType;
 use Bzh\WarBundle\Form\TargetCommentType;
@@ -33,7 +34,6 @@ class WarController extends Controller
         $targets = $repTarget->findTargetsAndAttacksByWar($war);
         
         $service = $this->get('war.dates.calc');
-        
         $form = $this->get('form.factory')->create(TargetCommentType::class, new Target());
         $formAtt = $this->get('form.factory')->create(TargetAttackType::class, new Attack());
         
@@ -81,6 +81,7 @@ class WarController extends Controller
             'target' => $target,
             'form' => $form->createView()
         ))*/
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
     
     public function targetAttackAction(Target $target, Request $request) {
@@ -90,7 +91,10 @@ class WarController extends Controller
         $form = $this->get('form.factory')->create(TargetAttackType::class, $attack, array(
             //'action' => $this->generateUrl('war_target_attack', array('id' => $target->getId()))
         ));
+        $rep = $em->getRepository("BzhWarBundle:Attack"); /* @var $rep AttackRepository */
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $attack->setTimerStart($rep->findMaxDateStartByTarget($target));
+            $attack->setTimerEnd($rep->findMaxDateEndByTarget($target));
             $attack->setTarget($target);
             $em->persist($attack);
             $em->flush();
@@ -99,9 +103,8 @@ class WarController extends Controller
                 'code' => $target->getWar()->getCode()
             ));
         }
-        return $this->render('BzhWarBundle:War:dump.html.twig', array(
-            'attack' => $attack
-        ));
+        
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
     
     public function newAction(Request $request) {
@@ -109,7 +112,6 @@ class WarController extends Controller
         
         $war = new War();
         $form = $this->get('form.factory')->create(WarType::class, $war);
-        $form->get('timeChoice')->setData('start');
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $timeChoice = $form->get('timeChoice')->getData();
@@ -134,11 +136,14 @@ class WarController extends Controller
             
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('info', 'Guerre bien enregistrée (code = '.$war->getCode().').');
+            $request->getSession()->getFlashBag()->add('info', 'Guerre bien enregistrée. Code : '.$war->getCode());
 
             return $this->redirectToRoute('war_code', array(
                 'code' => $war->getCode()
             ));
+        }
+        else {
+            $form->get('timeChoice')->setData('start');
         }
         
         return $this->render('BzhWarBundle:War:new.html.twig', array(
@@ -219,4 +224,36 @@ class WarController extends Controller
         
         return $this->redirectToRoute('home');
     }
+
+    public function deleteAttackAction($code, Attack $attack, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        
+        $name = $attack->getName();
+        $postion = $attack->getTarget()->getPosition();
+        
+        $em->remove($attack);
+        $em->flush();
+        
+        $request->getSession()->getFlashBag()->add('info', 'La réservation de '.$name.' sur la cible '.$postion.' a été supprimée');
+        
+        return $this->redirectToRoute('war_code', array(
+            'code' => $code
+        ));
+    }
+    
+    public function editAttackAction($code, Attack $attack, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('form.factory')->create(TargetAttackType::class, $attack);
+        
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em->flush();
+
+            return $this->redirectToRoute('war_code', array(
+                'code' => $code
+            ));
+        }
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
+    
+    
 }

@@ -33,30 +33,45 @@
         {% if t.comment|length > 0 %}
             {% set color = 'blue' %}
         {% endif %}
-         <p class="center target">
+         <div class="center target">
             {#<img src="{{ asset('bundles/bzhwar/img/note.png') }}" onclick="addComment({{ t.id }}, {{ t.position }}, '{{ t.comment|escape('js') }}')"/>#}
-            <i class="glyphicon glyphicon-comment btn " style="color:{{color}};font-size:22px;" onclick="addComment({{ t.id }}, {{ t.position }}, '{{ t.comment|escape('js') }}')"></i>
-            <img class="hdv" src="{{ asset('bundles/bzhwar/img/hdv' ~ t.hdv ~ '.png') }}" title="HDV {{ t.hdv }}" onclick="changeHdv({{ t.id }}, {{ t.position }})"/>
+            <i title="Ajouter un commentaire" class="glyphicon glyphicon-comment btn" style="color:{{color}};font-size:22px;" onclick="addComment({{ t.id }}, {{ t.position }}, '{{ t.comment|escape('js') }}')"></i>
+            
+            <img title="Modifier le niveau de l'hdv" class="hdv" src="{{ asset('bundles/bzhwar/img/hdv' ~ t.hdv ~ '.png') }}" title="HDV {{ t.hdv }}" onclick="changeHdv({{ t.id }}, {{ t.position }})"/>
+            
             <span class="big text-muted">{{ t.position }}.</span>
             
-            {# if t.attacks|length > 0 #}
             {% for a in t.attacks %}
-                <span>{{ a.name }}</span>
+                <div class="attack">
+                    <span class="name" onclick="editReservation('{{ war.code }}', {{ a.id }}, '{{ a.name|escape('js') }}')">
+                        {{ a.name }}
+                    </span>
+                    <i class="glyphicon glyphicon-remove delete" title="Supprimer la réservation" onclick="deleteAttack('{{ war.code }}', {{ a.id }})"></i>
+                    
+                    <br />
+                    
+                    <span class="noclash">{{ a.timerStart|date('H:i') }} -> {{ a.timerEnd|date('H:i') }}</span>
+                    
+                </div>
+                {#start:{{a.timerStart|date('d/m/Y H:i:s')}} - end:{{a.timerEnd|date('d/m/Y H:i:s')}}#}
             {% endfor %}   
-            {# endif #}
             
-            <img src="{{ asset('bundles/bzhwar/img/add.png') }}" onclick="addReservation({{ t.id }}, {{ t.position }})"/>
-        </p>
+            <img title="Ajouter une réservation" src="{{ asset('bundles/bzhwar/img/add.png') }}" onclick="addReservation({{ t.id }}, {{ t.position }})"/>
+        </div>
         {# render(controller("BzhWarBundle:War:targetComment", {'id': t.id })) #}
     {% endfor %}
     
     <div id="targetcomment" class="jqmWindow center">
         {{ include("BzhWarBundle:War:targetComment.html.twig") }}
     </div>
-    <div id="targethdv" class="jqmWindow center"></div>
+    <div id="targethdv" class="jqmWindow center">
+        
+    </div>
     <div id="targetattack" class="jqmWindow center">
         {{ include("BzhWarBundle:War:targetAttack.html.twig") }}
     </div>
+        
+    {# include("BzhWarBundle:War:dump.html.twig") #}
 {% endblock %}
 
 {% block javascripts %}

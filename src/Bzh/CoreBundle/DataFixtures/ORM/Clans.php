@@ -44,7 +44,7 @@ class Clans extends AbstractFixture implements OrderedFixtureInterface, Containe
         $bhz = new Clan();
         $bhz->setName("clash bzh");
         $bhz->setLevel(9);
-        $bhz->setTimer(6);
+        $bhz->setTimer(3);
         $bhz->setType(1);
         $bhz->setDescription($description);
         $bhz->setTag("#2GL2GPC9");
@@ -53,7 +53,7 @@ class Clans extends AbstractFixture implements OrderedFixtureInterface, Containe
         $skol = new Clan();
         $skol->setName("Skol Clash Bzh");
         $skol->setLevel(6);
-        $skol->setTimer(6);
+        $skol->setTimer(3);
         $skol->setType(1);
         $skol->setDescription($description);
         $skol->setTag("#9QPYC90P");

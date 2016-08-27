@@ -35,3 +35,15 @@ war_target_attack:
     defaults: { _controller: BzhWarBundle:War:targetAttack }
     options:
         expose: true
+
+war_delete_attack:
+    path:     /{code}/delete-attack/{id}
+    defaults: { _controller: BzhWarBundle:War:deleteAttack }
+    options:
+        expose: true
+        
+war_edit_attack:
+    path:     /{code}/edit-attack/{id}
+    defaults: { _controller: BzhWarBundle:War:editAttack }
+    options:
+        expose: true

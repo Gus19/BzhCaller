@@ -96,3 +96,16 @@ function addReservation(targetid, position) {
     $('#targetattack h4').html('Réserver cible #' + position);
     $('#targetattack').jqmShow();
 }
+
+function deleteAttack(warcode, attackid) {
+    if(confirm("Supprimer cette réservation ?")) {
+        window.location.replace( Routing.generate('war_delete_attack', { code: warcode, id: attackid }) );
+    }
+}
+
+function editReservation(warcode, attackid, name) {
+    $('#target_attack').attr('action', Routing.generate('war_edit_attack', { code: warcode, id: attackid }));
+    $('#targetattack h4').html('Modifier réservation');
+    $('#target_attack_name').val(name);
+    $('#targetattack').jqmShow();
+}

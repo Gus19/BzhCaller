@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Attack
  *
  * @ORM\Table(name="attack")
- * @ORM\Entity(repositoryClass="Bzh\CoreBundle\Repository\AttackRepository")
+ * @ORM\Entity(repositoryClass="Bzh\WarBundle\Repository\AttackRepository")
  */
 class Attack
 {
@@ -60,6 +60,27 @@ class Attack
      * @ORM\Column(name="destruction", type="float", nullable=true)
      */
     private $destruction;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $timerStart;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $timerEnd;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateResult;
 
     public function __construct()
     {
@@ -218,5 +239,77 @@ class Attack
     public function getTarget()
     {
         return $this->target;
+    }
+
+    /**
+     * Set timerStart
+     *
+     * @param \DateTime $timerStart
+     *
+     * @return Attack
+     */
+    public function setTimerStart($timerStart)
+    {
+        $this->timerStart = $timerStart;
+
+        return $this;
+    }
+
+    /**
+     * Get timerStart
+     *
+     * @return \DateTime
+     */
+    public function getTimerStart()
+    {
+        return $this->timerStart;
+    }
+
+    /**
+     * Set timerEnd
+     *
+     * @param \DateTime $timerEnd
+     *
+     * @return Attack
+     */
+    public function setTimerEnd($timerEnd)
+    {
+        $this->timerEnd = $timerEnd;
+
+        return $this;
+    }
+
+    /**
+     * Get timerEnd
+     *
+     * @return \DateTime
+     */
+    public function getTimerEnd()
+    {
+        return $this->timerEnd;
+    }
+
+    /**
+     * Set dateResult
+     *
+     * @param \DateTime $dateResult
+     *
+     * @return Attack
+     */
+    public function setDateResult($dateResult)
+    {
+        $this->dateResult = $dateResult;
+
+        return $this;
+    }
+
+    /**
+     * Get dateResult
+     *
+     * @return \DateTime
+     */
+    public function getDateResult()
+    {
+        return $this->dateResult;
     }
 }

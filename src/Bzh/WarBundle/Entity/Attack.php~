@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Attack
  *
  * @ORM\Table(name="attack")
- * @ORM\Entity(repositoryClass="Bzh\CoreBundle\Repository\AttackRepository")
+ * @ORM\Entity(repositoryClass="Bzh\WarBundle\Repository\AttackRepository")
  */
 class Attack
 {
@@ -60,6 +60,27 @@ class Attack
      * @ORM\Column(name="destruction", type="float", nullable=true)
      */
     private $destruction;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $timerStart;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $timerEnd;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateResult;
 
     public function __construct()
     {
@@ -197,30 +218,6 @@ class Attack
     }
 
     /**
-     * Set dateResa
-     *
-     * @param \DateTime $dateResa
-     *
-     * @return Attack
-     */
-    public function setDateResa($dateResa)
-    {
-        $this->dateResa = $dateResa;
-
-        return $this;
-    }
-
-    /**
-     * Get dateResa
-     *
-     * @return \DateTime
-     */
-    public function getDateResa()
-    {
-        return $this->dateResa;
-    }
-
-    /**
      * Set target
      *
      * @param \Bzh\WarBundle\Entity\Target $target
@@ -242,5 +239,53 @@ class Attack
     public function getTarget()
     {
         return $this->target;
+    }
+
+    /**
+     * Set timerStart
+     *
+     * @param \DateTime $timerStart
+     *
+     * @return Attack
+     */
+    public function setTimerStart($timerStart)
+    {
+        $this->timerStart = $timerStart;
+
+        return $this;
+    }
+
+    /**
+     * Get timerStart
+     *
+     * @return \DateTime
+     */
+    public function getTimerStart()
+    {
+        return $this->timerStart;
+    }
+
+    /**
+     * Set timerEnd
+     *
+     * @param \DateTime $timerEnd
+     *
+     * @return Attack
+     */
+    public function setTimerEnd($timerEnd)
+    {
+        $this->timerEnd = $timerEnd;
+
+        return $this;
+    }
+
+    /**
+     * Get timerEnd
+     *
+     * @return \DateTime
+     */
+    public function getTimerEnd()
+    {
+        return $this->timerEnd;
     }
 }

@@ -18,7 +18,7 @@ class CoreController extends Controller
         
         /* @var $repClan \Bzh\CoreBundle\Repository\ClanRepository */
         $repClan = $em->getRepository("BzhCoreBundle:Clan");
-        $clans = $repClan->findByType(1);
+        $clans = $repClan->findByType(1, array('slug' => 'ASC'));
         
         return $this->render('BzhCoreBundle:Core:index.html.twig', array(
             'wars' => $wars,

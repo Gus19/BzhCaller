@@ -61,18 +61,18 @@ a.w400 {
     width: 100%;
 }
 
-p.target * {
+.target * {
     vertical-align: middle;
 }
-p.target span.big {
+.target span.big {
     font-size: 24px;
     display: inline-block;
     width: 60px;
 }
-p.target img {
+.target img {
     cursor: pointer;
 }
-p.target .hdv {
+.target .hdv {
     width: 40px;
     height: 40px;
 }
@@ -137,3 +137,22 @@ p.target .hdv {
 #targetattack {
     width: 400px !important;
 }
+
+.attack {
+    display: inline-block;
+    text-align: left;
+    margin-right: 15px;
+}
+.attack .name {
+    color: #01abf2;
+    cursor: pointer;
+}
+.attack .delete {
+    cursor: pointer;
+    color:red;
+}   
+/*    text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+}
+.attack .delete:hover {
+    color:red !important;
+}*/
