@@ -5,7 +5,12 @@
     
     <p>Encore en construction ... </p>
     
-    {# if app.debug %}
+    <ul>
+      {% for m in json.items %}
+        <li>{{ m.tag }} {{ m.name }} {{ m.role }}</li>
+      {% endfor %}
+    </ul>
+    {% if app.debug %}
         {{ dump(json) }}
-    {% endif #}
+    {% endif %}
 {% endblock %}
