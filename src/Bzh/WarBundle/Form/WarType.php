@@ -5,12 +5,11 @@ namespace Bzh\WarBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Bzh\CoreBundle\Form\ClanType;
 
 use Bzh\CoreBundle\Repository\ClanRepository;
 
@@ -42,7 +41,6 @@ class WarType extends AbstractType
             ))
             ->add('timeChoice', ChoiceType::class, array(
                 'label' => 'Dates de guerre',
-                'mapped' => false,
                 'expanded' => true,
                 'choices' => array(
                     'Début dans' => 'start', 
@@ -51,8 +49,7 @@ class WarType extends AbstractType
                 //'data' => 'start'
             ))
             ->add('timeTo', TimeType::class, array(
-                'label' => false,
-                'mapped' => false
+                'label' => ''
             ))
             /*->add('timeToEnd', TimeType::class, array(
                 'label' => false,
@@ -63,11 +60,14 @@ class WarType extends AbstractType
             ->add('bzhClan', EntityType::class, array(
                 'class' => 'BzhCoreBundle:Clan',
                 'query_builder' => function (ClanRepository $er) {
-                    return $er->createQueryBuilder('c')->andWhere("c.type = 1");
+                    return $er->createQueryBuilder('c')->andWhere("c.type = 1")->orderBy("c.slug");
                 },
                 'choice_label' => 'name'
             ))
-            ->add('vsClanText', TextType::class, array(
+            ->add('vsClan', ClanType::class, array(
+                'label' => false
+            ))
+            /*->add('vsClanText', TextType::class, array(
                 'label' => 'Clan ennemi',
                 'mapped' => false
             ))          
@@ -79,8 +79,9 @@ class WarType extends AbstractType
                 'label' => 'Niveau clan ennemi',
                 'scale' => 0,
                 'mapped' => false
-            ))
+            ))*/
             ->add('enregistrer', SubmitType::class, array(
+                'label' => '',
                 'attr' => array('class' => 'btn-primary'),
             ))
         ;

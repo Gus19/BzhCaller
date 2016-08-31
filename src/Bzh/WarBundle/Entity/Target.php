@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="target")
  * @ORM\Entity(repositoryClass="Bzh\WarBundle\Repository\TargetRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Target
 {
@@ -72,6 +73,11 @@ class Target
     * @ORM\OneToMany(targetEntity="Bzh\WarBundle\Entity\Attack", mappedBy="target", cascade={"persist", "remove"})
     */
     private $attacks;
+    
+    /**
+    * @ORM\OneToOne(targetEntity="Bzh\WarBundle\Entity\Image", cascade={"persist", "remove"})
+    */
+    private $image;
 
     public function __construct()
     {
@@ -288,5 +294,29 @@ class Target
     public function getAttacks()
     {
         return $this->attacks;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \Bzh\WarBundle\Entity\Image $image
+     *
+     * @return Target
+     */
+    public function setImage(\Bzh\WarBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Bzh\WarBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

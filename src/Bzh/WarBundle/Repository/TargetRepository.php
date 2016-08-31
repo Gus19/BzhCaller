@@ -22,4 +22,12 @@ class TargetRepository extends \Doctrine\ORM\EntityRepository
         $qb->addOrderBy('a.dateCreation');
         return $qb->getQuery()->getResult();
     }
+    
+    public function findCommentById($id) {
+        $qb = $this->createQueryBuilder('t');
+        $qb->leftJoin("t.image", "i")->addSelect("i");
+        $qb->leftJoin("t.war", "w")->addSelect("w");
+        $qb->where('t.id = :id')->setParameter('id', $id);
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

@@ -1,11 +1,15 @@
-{#<div id="targetcomment{{ target.id }}" class="jqmWindow center">#}
-    <h4>Commentaire cible #{#target.position#}</h4>
+<body>
+    <h4>Commentaire cible {{ target.position }}</h4>
     {{ form_start(form, {'attr': {'id': 'target_comment'}}) }}
     {{ form_errors(form) }}
     {{ form_widget(form.comment) }}
+    {{ form_widget(form.image) }}
+    {% if target.image %}
+        <img src="{{ target.image.webPath }}" />
+    {% endif %}
     <br />
     {{ form_widget(form.enregistrer) }}
     {{ form_widget(form.fermer) }}
     {{ form_rest(form) }}
     {{ form_end(form) }}
-{#</div>#}
+</body>

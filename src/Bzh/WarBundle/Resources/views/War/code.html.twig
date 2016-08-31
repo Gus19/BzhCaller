@@ -5,7 +5,7 @@
     {# Exemple sans timer : http://www.clashcaller.com/war/jdfxj 
     {# Exemple avec timer : http://www.clashcaller.com/war/undkb #}
     
-    <h3>{{ war.bzhClan.name }} vs {{ war.vsClan.name }}</h3>
+    <h3>{{ war.bzhClan.name }} <span class="noclash">vs</span> {{ war.vsClan.name }}</h3>
     
     <div class="row" style="color:grey">
         <p class="center col-md-4">
@@ -36,6 +36,9 @@
          <div class="center target">
             {#<img src="{{ asset('bundles/bzhwar/img/note.png') }}" onclick="addComment({{ t.id }}, {{ t.position }}, '{{ t.comment|escape('js') }}')"/>#}
             <i title="Ajouter un commentaire" class="glyphicon glyphicon-comment btn" style="color:{{color}};font-size:22px;" onclick="addComment({{ t.id }}, {{ t.position }}, '{{ t.comment|escape('js') }}')"></i>
+            {# if t.image %}
+                <img src="{{ t.image.webPath }}" />
+            {% endif #}
             
             <img title="Modifier le niveau de l'hdv" class="hdv" src="{{ asset('bundles/bzhwar/img/hdv' ~ t.hdv ~ '.png') }}" title="HDV {{ t.hdv }}" onclick="changeHdv({{ t.id }}, {{ t.position }})"/>
             
@@ -50,7 +53,8 @@
                     
                     <br />
                     
-                    <span class="noclash">{{ a.timerStart|date('H:i') }} -> {{ a.timerEnd|date('H:i') }}</span>
+                    {#<span class="noclash">{{ a.timerStart|date('H:i') }} -> {{ a.timerEnd|date('H:i') }}</span>#}
+                    <img src="{{ asset('bundles/bzhwar/img/called.png') }}" />
                     
                 </div>
                 {#start:{{a.timerStart|date('d/m/Y H:i:s')}} - end:{{a.timerEnd|date('d/m/Y H:i:s')}}#}
@@ -62,7 +66,7 @@
     {% endfor %}
     
     <div id="targetcomment" class="jqmWindow center">
-        {{ include("BzhWarBundle:War:targetComment.html.twig") }}
+        {# include("BzhWarBundle:War:targetComment.html.twig") #}
     </div>
     <div id="targethdv" class="jqmWindow center">
         

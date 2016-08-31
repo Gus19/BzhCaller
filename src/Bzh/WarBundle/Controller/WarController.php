@@ -65,11 +65,14 @@ class WarController extends Controller
         ));
     }
     
-    public function targetCommentAction(Target $target, Request $request) {
-        //En commentaire pour l'ajax
+    public function targetCommentAction($id, Request $request) {
         $em = $this->getDoctrine()->getManager();
+        
+        $rep = $em->getRepository("BzhWarBundle:Target"); /* @var $rep TargetRepository */
+        $target = $rep->findCommentById($id); /* @var $war War */
+        
         $form = $this->get('form.factory')->create(TargetCommentType::class, $target, array(
-            //'action' => $this->generateUrl('war_target_comment', array('id' => $target->getId()))
+            'action' => $this->generateUrl('war_target_comment', array('id' => $target->getId()))
         ));
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em->flush();
@@ -77,11 +80,10 @@ class WarController extends Controller
                 'code' => $target->getWar()->getCode()
             ));
         }
-        /*return $this->render('BzhWarBundle:War:targetComment.html.twig', array(
+        return $this->render('BzhWarBundle:War:targetComment.html.twig', array(
             'target' => $target,
             'form' => $form->createView()
-        ))*/
-        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+        ));
     }
     
     public function targetAttackAction(Target $target, Request $request) {
@@ -114,21 +116,10 @@ class WarController extends Controller
         $form = $this->get('form.factory')->create(WarType::class, $war);
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $timeChoice = $form->get('timeChoice')->getData();
-            $timeTo = $form->get('timeTo')->getData();/* @var $timeTo \DateTime */
             $serviceDates = $this->get('war.dates.calc');
-            
-            $vsClan = new Clan();
-            $war->setCode(substr(md5(uniqid(rand(), true)),0, 4));
-            $war->setDateStart($serviceDates->calcDateStart($timeChoice, $timeTo));
-            $war->setDateEnd($serviceDates->calcDateEnd($timeChoice, $timeTo));
-            $vsClan->setName($form->get('vsClanText')->getData());
-            $vsClan->setLevel($form->get('vsClanLevel')->getData());
-            $vsClan->setTag($form->get('vsClanTag')->getData());
-            $vsClan->setType(2);
-            $war->setVsClan($vsClan);
-            
-            $em->persist($vsClan);
+            $war->setCode($this->get('war.code.new')->generate());
+            $war->setDateStart($serviceDates->calcDateStart($war->getTimeChoice(), $war->getTimeTo()));
+            $war->setDateEnd($serviceDates->calcDateEnd($war->getTimeChoice(), $war->getTimeTo()));
             $em->persist($war);
             
             $service = $this->get('war.targets.create');
@@ -153,57 +144,33 @@ class WarController extends Controller
     
     public function editAction(War $war, Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->get('form.factory')->create(WarType::class, $war);
         
-        $vsClan = $war->getVsClan();
-        $now = new \Datetime();
-        
-        if($now < $war->getDateStart()) {
-            $form->get('timeChoice')->setData('start');
-            $diff = date_diff($now, $war->getDateStart());
-            $form->get('timeTo')->setData( $war->getDateStart()->setTime(0, 0, 0)->add($diff) );
-        }
-        elseif ($now < $war->getDateEnd()) {
-            $form->get('timeChoice')->setData('end');
-            $diff = date_diff($now, $war->getDateEnd());
-            $form->get('timeTo')->setData( $war->getDateEnd()->setTime(0, 0, 0)->add($diff) );
-        }
-        else {
+        if(new \Datetime() > $war->getDateEnd()) {
             $request->getSession()->getFlashBag()->add('info', 'Impossible de modifier une guerre terminée');
             return $this->redirectToRoute("war_code", array(
                 'code' => $war->getCode()
             ));
         }
-        
-        $form->get('vsClanText')->setData( $vsClan->getName() );
-        $form->get('vsClanLevel')->setData( $vsClan->getLevel() );
-        $form->get('vsClanTag')->setData( $vsClan->getTag() );
-        
-        if ($request->isMethod('POST')) {
-            // Avant que l'objet soit hydraté
+        else {
+            $war->setTimeToAndTimeChoise();
+            $form = $this->get('form.factory')->create(WarType::class, $war);
             $size = $war->getSize();
-            
-            if($form->handleRequest($request)->isValid()) {
-                if($size != $war->getSize()) {
-                    $service = $this->get('war.targets.create');
-                    $service->generate($war, $war->getSize());
-                }
-                
-                $timeChoice = $form->get('timeChoice')->getData();
-                $timeTo = $form->get('timeTo')->getData();/* @var $timeTo \DateTime */
-                $serviceDates = $this->get('war.dates.calc');
-                $war->setDateStart($serviceDates->calcDateStart($timeChoice, $timeTo));
-                $war->setDateEnd($serviceDates->calcDateEnd($timeChoice, $timeTo));
-                
-                $vsClan->setName($form->get('vsClanText')->getData());
-                $vsClan->setLevel($form->get('vsClanLevel')->getData());
-                $vsClan->setTag($form->get('vsClanTag')->getData());
-                $em->flush();
-                
-                return $this->redirectToRoute('war_code', array(
-                    'code' => $war->getCode()
-                ));
+        }
+        
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            if($size != $war->getSize()) {
+                $this->get('war.targets.create')->generate($war, $war->getSize());
             }
+
+            $serviceDates = $this->get('war.dates.calc');
+            $war->setDateStart($serviceDates->calcDateStart($war->getTimeChoice(), $war->getTimeTo()));
+            $war->setDateEnd($serviceDates->calcDateEnd($war->getTimeChoice(), $war->getTimeTo()));
+
+            $em->flush();
+
+            return $this->redirectToRoute('war_code', array(
+                'code' => $war->getCode()
+            ));
         }
         
         return $this->render('BzhWarBundle:War:edit.html.twig', array(

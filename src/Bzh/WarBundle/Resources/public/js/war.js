@@ -76,20 +76,28 @@ function countdown(dateStr, className) {
     }
 }
 
-/*function addComment(targetid) {
+var lasttargetid;
+function addComment(targetid) {
+    
+    if(targetid == lasttargetid) {
+        $('#targetcomment').jqmShow();
+        return;
+    }
+    
     $('#targetcomment').jqmShow();
     $('#targetcomment').html('chargement ...');
 
     $.get(Routing.generate('war_target_comment', { id: targetid }), function( data ) {
         $('#targetcomment').html(data);
+        lasttargetid = targetid;
     });
-}*/
-function addComment(targetid, position, comment) {
+}
+/*function addComment(targetid, position, comment) {
     $('#target_comment').attr('action', Routing.generate('war_target_comment', { id: targetid }));
     $('#targetcomment h4').html('Commentaire cible #' + position);
     $('#target_comment_comment').val(comment);
     $('#targetcomment').jqmShow();
-}
+}*/
 
 function addReservation(targetid, position) {
     $('#target_attack').attr('action', Routing.generate('war_target_attack', { id: targetid }));

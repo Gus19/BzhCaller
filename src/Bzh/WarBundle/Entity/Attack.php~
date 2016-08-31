@@ -288,4 +288,28 @@ class Attack
     {
         return $this->timerEnd;
     }
+
+    /**
+     * Set dateResult
+     *
+     * @param \DateTime $dateResult
+     *
+     * @return Attack
+     */
+    public function setDateResult($dateResult)
+    {
+        $this->dateResult = $dateResult;
+
+        return $this;
+    }
+
+    /**
+     * Get dateResult
+     *
+     * @return \DateTime
+     */
+    public function getDateResult()
+    {
+        return $this->dateResult;
+    }
 }

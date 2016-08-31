@@ -12,6 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="clan")
  * @ORM\Entity(repositoryClass="Bzh\CoreBundle\Repository\ClanRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Clan
 {
@@ -86,7 +87,7 @@ class Clan
      * 2 = Clan ennemi
      * @ORM\Column(name="type", type="integer")
      */
-    private $type;
+    private $type = 2;
     
     /**
      * @var string

@@ -156,3 +156,9 @@ a.w400 {
 .attack .delete:hover {
     color:red !important;
 }*/
+#target_comment_image_file {
+    font-family: Arial, Helvetica, sans-serif;
+}
+label[for=target_comment_image_file] {
+    display: none;
+}

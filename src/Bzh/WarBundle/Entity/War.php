@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="war")
  * @ORM\Entity(repositoryClass="Bzh\WarBundle\Repository\WarRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class War
 {
@@ -106,7 +107,6 @@ class War
      * @var string
      * @ORM\Column(type="string", length=1, nullable=true)
      */
-    
     private $result;
     
     public function __construct()
@@ -473,4 +473,43 @@ class War
     {
         return $this->starsVs;
     }
+    
+    private $timeChoice;
+    public function setTimeChoice($param) {
+        $this->timeChoice = $param;
+    }
+    public function getTimeChoice() {
+        return $this->timeChoice;
+    }
+    
+    private $timeTo;
+    public function setTimeTo($param) {
+        $this->timeTo = $param;
+    }
+    public function getTimeTo() {
+        return $this->timeTo;
+    }
+    
+    public function setTimeToAndTimeChoise() {
+        $now = new \Datetime();
+        if($now < $this->getDateStart()) {
+            $this->timeChoice = 'start';
+            $diff = date_diff($now, $this->getDateStart());
+            $this->timeTo = $this->getDateStart()->setTime(0, 0, 0)->add($diff);
+        }
+        elseif ($now < $this->getDateEnd()) {
+            $this->timeChoice = 'end';
+            $diff = date_diff($now, $this->getDateEnd());
+            $this->timeTo = $this->getDateEnd()->setTime(0, 0, 0)->add($diff);
+        }
+    }
+    
+    /*
+    * @ORM\PreUpdate()
+    */
+    public function preUpdate()
+    {
+        $this->dateMaj = new \DateTime();
+    }
+    
 }

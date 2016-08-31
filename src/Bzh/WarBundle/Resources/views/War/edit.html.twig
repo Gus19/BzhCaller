@@ -4,7 +4,18 @@
     <h3>Modification de la guerre contre <a href="{{ path('war_code', {'code':war.code }) }}">{{ war.vsClan.name }}</a></h3>
 
     <div class="well">
-        {{ form(form) }}
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.size) }}
+        {{ form_row(form.timeChoice) }}
+        {{ form_row(form.timeTo) }}
+        {{ form_row(form.bzhClan) }}
+        {{ form_row(form.vsClan.name) }}
+        {{ form_row(form.vsClan.tag) }}
+        {{ form_row(form.vsClan.level) }}
+        {{ form_row(form.enregistrer) }}
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
     </div>
 {% endblock %}
 

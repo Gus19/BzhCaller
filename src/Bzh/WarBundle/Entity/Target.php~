@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="target")
  * @ORM\Entity(repositoryClass="Bzh\WarBundle\Repository\TargetRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Target
 {
@@ -69,9 +70,14 @@ class Target
     private $dateMaj;
     
     /**
-    * @ORM\OneToMany(targetEntity="Bzh\WarBundle\Entity\Target", mappedBy="target", cascade={"persist", "remove"})
+    * @ORM\OneToMany(targetEntity="Bzh\WarBundle\Entity\Attack", mappedBy="target", cascade={"persist", "remove"})
     */
     private $attacks;
+    
+    /**
+    * @ORM\OneToOne(targetEntity="Bzh\WarBundle\Entity\Image", cascade={"persist", "remove"})
+    */
+    private $image;
 
     public function __construct()
     {
@@ -254,5 +260,39 @@ class Target
     public function getWar()
     {
         return $this->war;
+    }
+
+    /**
+     * Add attack
+     *
+     * @param \Bzh\WarBundle\Entity\Target $attack
+     *
+     * @return Target
+     */
+    public function addAttack(\Bzh\WarBundle\Entity\Target $attack)
+    {
+        $this->attacks[] = $attack;
+
+        return $this;
+    }
+
+    /**
+     * Remove attack
+     *
+     * @param \Bzh\WarBundle\Entity\Target $attack
+     */
+    public function removeAttack(\Bzh\WarBundle\Entity\Target $attack)
+    {
+        $this->attacks->removeElement($attack);
+    }
+
+    /**
+     * Get attacks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAttacks()
+    {
+        return $this->attacks;
     }
 }
