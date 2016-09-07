@@ -3,13 +3,51 @@
     {{ form_start(form, {'attr': {'id': 'target_comment'}}) }}
     {{ form_errors(form) }}
     {{ form_widget(form.comment) }}
-    {{ form_widget(form.image) }}
-    {% if target.image %}
-        <img src="{{ target.image.webPath }}" />
-    {% endif %}
-    <br />
+    
+    <div id="input-image">
+        <label class="input-group-btn">
+            <span class="btn btn-primary">
+                Parcourir &hellip;
+                {{ form_widget(form.image) }}
+            </span>
+        </label>
+            
+        {% set init = 'Aucun fichier choisi' %}
+        {% if target.image %}
+            {% set init = target.image.alt %}
+        {% endif %}
+        <input type="text" class="form-control noclash" value="{{ init }}" readonly />
+        {% if target.image %}
+            <a href="{{ target.image.webPath }}" alt="{{ target.image.alt }}" target="_blank">Accéder au fichier</a>
+        {% endif %}
+    </div>
+
+    <br style="clear:both" />
+    <br/>
     {{ form_widget(form.enregistrer) }}
     {{ form_widget(form.fermer) }}
     {{ form_rest(form) }}
     {{ form_end(form) }}
 </body>
+<script type="text/javascript">
+    $(function() {
+      // We can attach the `fileselect` event to all file inputs on the page
+        $(document).on('change', ':file', function() {
+            var input = $(this),
+                numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [numFiles, label]);
+        });
+
+        // We can watch for our custom `fileselect` event like this
+        $(document).ready( function() {
+            $(':file').on('fileselect', function(event, numFiles, label) {
+                var input = $('#input-image').find(':text'),
+                    log = numFiles > 1 ? numFiles + ' files selected' : label;
+                if( input.length ) {
+                    input.val(log);
+                }
+            });
+        });
+    });
+</script>

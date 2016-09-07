@@ -72,7 +72,7 @@ class WarController extends Controller
         $target = $rep->findCommentById($id); /* @var $war War */
         
         $form = $this->get('form.factory')->create(TargetCommentType::class, $target, array(
-            'action' => $this->generateUrl('war_target_comment', array('id' => $target->getId()))
+            'action'=> $this->generateUrl('war_target_comment', array('id' => $target->getId()))
         ));
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em->flush();
