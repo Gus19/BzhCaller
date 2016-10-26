@@ -25,13 +25,13 @@ war_target_comment:
         expose: true
         
 war_target_hdv:
-    path:     /target-hdv/{id}
+    path:     /{code}/target-hdv/{id}
     defaults: { _controller: BzhWarBundle:War:targetHdv }
     options:
         expose: true
         
 war_target_attack:
-    path:     /target-attack/{id}
+    path:     /{code}/target-attack/{id}
     defaults: { _controller: BzhWarBundle:War:targetAttack }
     options:
         expose: true
@@ -45,5 +45,11 @@ war_delete_attack:
 war_edit_attack:
     path:     /{code}/edit-attack/{id}
     defaults: { _controller: BzhWarBundle:War:editAttack }
+    options:
+        expose: true
+
+war_result_attack:
+    path:     /{code}/result-attack/{id}
+    defaults: { _controller: BzhWarBundle:War:resultAttack }
     options:
         expose: true

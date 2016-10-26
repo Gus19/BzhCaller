@@ -1,16 +1,18 @@
 $().ready(function() {
     if($('.prepday').size() > 0) {
         countdownStart();
-        setInterval(countdownStart, 1000);
+        setInterval(countdownStart, 60000);
     }
     if($('.warday').size() > 0) {
         countdownEnd();
-        setInterval(countdownEnd, 1000);
+        setInterval(countdownEnd, 60000);
     }
     
     $('#clandescription').jqm({ onShow:screenCenter('#clandescription') });
     $('#targetcomment').jqm({ onShow:screenCenter('#targetcomment') });
+    $('#targethdv').jqm({ onShow:screenCenter('#targethdv') });
     $('#targetattack').jqm({ onShow:screenCenter('#targetattack') });
+    $('#resultattack').jqm({ onShow:screenCenter('#resultattack') });
 });
 
 function padLeft(nr, n, str) {
@@ -56,37 +58,34 @@ function countdown(dateStr, className) {
     var eventDate = StringToDate(dateStr);
 
     if(!eventDate) {
-        return;
+        return true;
     }
 
     var currentDate = new Date();
     if(currentDate >= eventDate) {
-        location.reload();
-        return;
+        return false;
     }
 
     var diff = calcDiff(eventDate.getTime(), currentDate.getTime());
 
-    if(diff['hours'] == 0) {
+    if(diff['hours'] === 0) {
         diff['minutes']++;
-        $(className).html(diff['minutes'] + 'M');
+        $(className).html(diff['minutes'] + 'm');
     }
     else {
-        $(className).html(diff['hours'] + 'H' + ' ' + padLeft(String(diff['minutes']),2) + 'M');
+        $(className).html(diff['hours'] + 'h' + padLeft(String(diff['minutes']),2) + 'm');
     }
+    return true;
 }
 
 var lasttargetid;
 function addComment(targetid) {
-    
-    if(targetid == lasttargetid) {
+    if(targetid === lasttargetid) {
         $('#targetcomment').jqmShow();
         return;
     }
-    
     $('#targetcomment').jqmShow();
     $('#targetcomment').html('chargement ...');
-
     $.get(Routing.generate('war_target_comment', { id: targetid }), function( data ) {
         $('#targetcomment').html(data);
         lasttargetid = targetid;
@@ -98,22 +97,32 @@ function addComment(targetid) {
     $('#target_comment_comment').val(comment);
     $('#targetcomment').jqmShow();
 }*/
-
 function addReservation(targetid, position) {
-    $('#target_attack').attr('action', Routing.generate('war_target_attack', { id: targetid }));
+    $('#target_attack').attr('action', Routing.generate('war_target_attack', { code: warcode, id: targetid }));
     $('#targetattack h4').html('Réserver cible #' + position);
     $('#targetattack').jqmShow();
 }
 
-function deleteAttack(warcode, attackid) {
+function deleteAttack(attackid) {
     if(confirm("Supprimer cette réservation ?")) {
         window.location.replace( Routing.generate('war_delete_attack', { code: warcode, id: attackid }) );
     }
 }
 
-function editReservation(warcode, attackid, name) {
+function editReservation(attackid, name) {
     $('#target_attack').attr('action', Routing.generate('war_edit_attack', { code: warcode, id: attackid }));
     $('#targetattack h4').html('Modifier réservation');
     $('#target_attack_name').val(name);
     $('#targetattack').jqmShow();
+}
+function changeHdv(targetid, hdv) {
+    $('#target_hdv').attr('action', Routing.generate('war_target_hdv', { code: warcode, id: targetid }));
+    $('#target_hdv_hdv').val(hdv);
+    $('#targethdv').jqmShow();
+}
+function setResultAttack(attackid, stars, destruction) {
+    $('#result_attack').attr('action', Routing.generate('war_result_attack', { code: warcode, id: attackid }));
+    $('#result_attack_stars').val(stars);
+    $('#result_attack_destruction').val(destruction);
+    $('#resultattack').jqmShow();
 }

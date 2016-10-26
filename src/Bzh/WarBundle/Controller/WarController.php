@@ -15,12 +15,12 @@ use Bzh\WarBundle\Form\WarType;
 use Bzh\CoreBundle\Form\ClanDescriptionType;
 use Bzh\WarBundle\Form\TargetCommentType;
 use Bzh\WarBundle\Form\TargetAttackType;
+use Bzh\WarBundle\Form\TargetHdvType;
+use Bzh\WarBundle\Form\ResultAttackType;
 
 class WarController extends Controller
 {
-    
-    public function codeAction($code, Request $request)
-    {
+    public function codeAction($code, Request $request) {
         $em = $this->getDoctrine()->getManager();
         $rep = $em->getRepository("BzhWarBundle:War"); /* @var $rep WarRepository */
         $war = $rep->findOneByCode($code); /* @var $war War */
@@ -36,6 +36,8 @@ class WarController extends Controller
         $service = $this->get('war.dates.calc');
         $form = $this->get('form.factory')->create(TargetCommentType::class, new Target());
         $formAtt = $this->get('form.factory')->create(TargetAttackType::class, new Attack());
+        $formHdv = $this->get('form.factory')->create(TargetHdvType::class, new Target());
+        $formResult = $this->get('form.factory')->create(ResultAttackType::class, new Attack());
         
         return $this->render('BzhWarBundle:War:code.html.twig', array(
             'war' => $war,
@@ -43,7 +45,9 @@ class WarController extends Controller
             'timeBejoreEnd' => $service->calcTimeBeforeEnd($war->getDateEnd()),
             'targets' => $targets,
             'form' => $form->createView(),
-            'formAtt' => $formAtt->createView()
+            'formAtt' => $formAtt->createView(),
+            'formHdv' => $formHdv->createView(),
+            'formResult' => $formResult->createView()
         ));
     }
     
@@ -86,7 +90,7 @@ class WarController extends Controller
         ));
     }
     
-    public function targetAttackAction(Target $target, Request $request) {
+    public function targetAttackAction($code, Target $target, Request $request) {
         //En commentaire pour l'ajax
         $em = $this->getDoctrine()->getManager();
         $attack = new Attack();
@@ -102,7 +106,7 @@ class WarController extends Controller
             $em->flush();
             
             return $this->redirectToRoute('war_code', array(
-                'code' => $target->getWar()->getCode()
+                'code' => $code
             ));
         }
         
@@ -201,7 +205,7 @@ class WarController extends Controller
         $em->remove($attack);
         $em->flush();
         
-        $request->getSession()->getFlashBag()->add('info', 'La réservation de '.$name.' sur la cible '.$postion.' a été supprimée');
+        $request->getSession()->getFlashBag()->add('info', 'La réservation pour '.$name.' sur la cible '.$postion.' a été supprimée');
         
         return $this->redirectToRoute('war_code', array(
             'code' => $code
@@ -222,5 +226,32 @@ class WarController extends Controller
         throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
     }
     
+    public function resultAttackAction($code, Attack $attack, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $attack->setDateResult(new \DateTime());
+        $form = $this->get('form.factory')->create(ResultAttackType::class, $attack);
+        
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em->flush();
+            return $this->redirectToRoute('war_code', array(
+                'code' => $code
+            ));
+        }
+        
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
     
+    public function targetHdvAction($code, Target $target, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('form.factory')->create(TargetHdvType::class, $target);
+        
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em->flush();
+
+            return $this->redirectToRoute('war_code', array(
+                'code' => $code
+            ));
+        }
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
 }

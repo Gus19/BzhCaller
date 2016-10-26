@@ -1,10 +1,6 @@
 {% extends "BzhCoreBundle::layout.html.twig" %}
 
 {% block body %}
-    
-    {# Exemple sans timer : http://www.clashcaller.com/war/jdfxj 
-    {# Exemple avec timer : http://www.clashcaller.com/war/undkb #}
-    
     <h3>{{ war.bzhClan.name }} <span class="noclash">vs</span> {{ war.vsClan.name }}</h3>
     
     <div class="row" style="color:grey">
@@ -27,52 +23,70 @@
     
     {{ render(controller("BzhWarBundle:War:clanDescription", {'code': war.code })) }}
     
+    <hr/>
+    
     {% for t in targets %}
         
         {% set color = 'grey' %}
+        {% set title = 'Ajouter un commentaire' %}
         {% if t.comment|length > 0 %}
             {% set color = 'blue' %}
+            {% set title = 'Modifier un commentaire' %}
         {% endif %}
-         <div class="center target">
-            {#<img src="{{ asset('bundles/bzhwar/img/note.png') }}" onclick="addComment({{ t.id }}, {{ t.position }}, '{{ t.comment|escape('js') }}')"/>#}
-            <i title="Ajouter un commentaire" class="glyphicon glyphicon-comment btn" style="color:{{color}};font-size:22px;" onclick="addComment({{ t.id }}, {{ t.position }}, '{{ t.comment|escape('js') }}')"></i>
-            {# if t.image %}
-                <img src="{{ t.image.webPath }}" />
-            {% endif #}
+         <div class="target">
+            <i title="{{ title }}" class="glyphicon glyphicon-comment btn" style="color:{{color}};font-size:22px;" onclick="addComment({{ t.id }})"></i>
             
-            <img title="Modifier le niveau de l'hdv" class="hdv" src="{{ asset('bundles/bzhwar/img/hdv' ~ t.hdv ~ '.png') }}" title="HDV {{ t.hdv }}" onclick="changeHdv({{ t.id }}, {{ t.position }})"/>
+            <img title="Modifier le niveau de l'hdv" class="hdv" src="{{ asset('bundles/bzhwar/img/hdv' ~ t.hdv ~ '.png') }}" title="HDV {{ t.hdv }}" onclick="changeHdv({{ t.id }}, {{ t.hdv }})"/>
             
             <span class="big text-muted">{{ t.position }}.</span>
             
             {% for a in t.attacks %}
                 <div class="attack">
-                    <span class="name" onclick="editReservation('{{ war.code }}', {{ a.id }}, '{{ a.name|escape('js') }}')">
-                        {{ a.name }}
-                    </span>
-                    <i class="glyphicon glyphicon-remove delete" title="Supprimer la réservation" onclick="deleteAttack('{{ war.code }}', {{ a.id }})"></i>
-                    
-                    <br />
-                    
-                    {#<span class="noclash">{{ a.timerStart|date('H:i') }} -> {{ a.timerEnd|date('H:i') }}</span>#}
-                    <img src="{{ asset('bundles/bzhwar/img/called.png') }}" />
-                    
+                    <p>
+                        <span class="name" onclick="editReservation({{ a.id }}, '{{ a.name|escape('js') }}')">
+                            {{ a.name }}
+                        </span>
+                        <i class="glyphicon glyphicon-remove delete" title="Supprimer la réservation" onclick="deleteAttack({{ a.id }})"></i>
+                    </p>
+                    <p class="result pointer" onclick="setResultAttack({{ a.id }},'{{ a.stars }}','{{ a.destruction }}')">
+                        {% if a.dateResult %}
+                            {% if a.stars > 0 %}
+                                {% for i in 1..a.stars %}
+                                    <i class="glyphicon glyphicon-star" title="{{a.destruction}}% de destruction"></i>
+                                {% endfor %}
+                            {% endif %}
+                            {% if a.stars < 3 %}
+                                {% for i in (a.stars+1)..3 %}
+                                    <i class="glyphicon glyphicon-star-empty" title="{{a.destruction}}% de destruction"></i>
+                                {% endfor %}
+                            {% endif %}
+                            {#<span class="noclash timer">{{ a.stars }}</span>
+                            <i class="glyphicon glyphicon-star" title="{{a.destruction}}% de destruction"></i>#}
+                        {% elseif timeBejoreEnd and not timeBejoreStart %}
+                            <i class="glyphicon glyphicon-dashboard" title="Fin à {{ a.timerEnd|date('H') }}h{{ a.timerEnd|date('i') }}"></i>
+                            <span class="noclash timer" id="timer{{ a.id }}"></span>
+                        {% elseif not timeBejoreEnd and not timeBejoreStart and not a.stars %}
+                            <span class="noclash timer">Noter le résultat</span>
+                        {% endif %}
+                    </p>
                 </div>
-                {#start:{{a.timerStart|date('d/m/Y H:i:s')}} - end:{{a.timerEnd|date('d/m/Y H:i:s')}}#}
             {% endfor %}   
             
             <img title="Ajouter une réservation" src="{{ asset('bundles/bzhwar/img/add.png') }}" onclick="addReservation({{ t.id }}, {{ t.position }})"/>
         </div>
-        {# render(controller("BzhWarBundle:War:targetComment", {'id': t.id })) #}
     {% endfor %}
     
     <div id="targetcomment" class="jqmWindow center">
         {# include("BzhWarBundle:War:targetComment.html.twig") #}
     </div>
     <div id="targethdv" class="jqmWindow center">
-        
+        {{ include("BzhWarBundle:War:targetHdv.html.twig") }}
     </div>
     <div id="targetattack" class="jqmWindow center">
         {{ include("BzhWarBundle:War:targetAttack.html.twig") }}
+    </div>
+    <div id="resultattack" class="jqmWindow center">
+        {{ include("BzhWarBundle:War:resultAttack.html.twig") }}
     </div>
         
     {# include("BzhWarBundle:War:dump.html.twig") #}
@@ -87,17 +101,40 @@
 
 {% block twigjs %}
 <script type="text/javascript">    
-    function changeHdv(targetid) {
-        alert('changeHdv ' + targetid);
-    }
-    
     var dateStart = '{{ war.dateStart|date('Y-m-d H:i:s') }}';
     var dateEnd = '{{ war.dateEnd|date('Y-m-d H:i:s') }}';
+    var warcode = '{{ war.code }}';
     function countdownStart() {
-        countdown(dateStart, '.prepday');
+        if(!countdown(dateStart, '.prepday')) {
+            location.reload();
+        }
     }
     function countdownEnd() {
-        countdown(dateEnd, '.warday');
+        if(!countdown(dateEnd, '.warday')) {
+            location.reload();
+        }
     }
+    
+    {% for t in targets %}
+        {% for a in t.attacks %}
+            function countdown{{ a.id }}() {
+                var id = "#timer{{ a.id }}";
+                if($(id).size() > 0) {
+                    var dateEnd = '{{ a.timerEnd|date('Y-m-d H:i:s') }}';
+                    var bool = countdown(dateEnd, id);
+                    if(!bool) {
+                        $(id).html("Expiré");
+                    }
+                    return bool;
+                }
+                return false;
+            }
+            $().ready(function() {
+                if(countdown{{ a.id }}()) {
+                    setInterval(countdown{{ a.id }}, 1000);
+                }
+            });
+        {% endfor %}
+    {% endfor %}
 </script>
 {% endblock %}

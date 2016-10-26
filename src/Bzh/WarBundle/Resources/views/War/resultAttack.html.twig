@@ -1,0 +1,28 @@
+<h4>Résultat de l'attaque{#target.position#}</h4>
+{{ form_start(formResult, {'attr': {'id': 'result_attack'}}) }}
+{{ form_errors(formResult) }}
+
+{#<div class="form-group">
+    <label class="col-sm-3 control-label" for="result_attack_stars">Stars</label>
+    <div class="col-sm-9">
+        <input type="number" id="result_attack_stars" name="result_attack[stars]" min="0" max="3" class="form-control">
+    </div>
+</div>#}
+<div class="form-group">
+    <label class="col-sm-6 control-label" for="result_attack_stars">Etoiles</label>
+    <div class="col-sm-6">
+        {{ form_widget(formResult.stars) }}
+        <span><i class="glyphicon glyphicon-star"></i></span>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-6 control-label" for="result_attack_destruction">Destruction</label>
+    <div class="col-sm-6">
+        {{ form_widget(formResult.destruction) }}
+        <span>%</span>
+    </div>
+</div>
+{{ form_widget(formResult.enregistrer) }}
+{{ form_widget(formResult.fermer) }}
+{{ form_rest(formResult) }}
+{{ form_end(formResult) }}

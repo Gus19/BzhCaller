@@ -65,7 +65,7 @@ a.w400 {
     vertical-align: middle;
 }
 .target span.big {
-    font-size: 24px;
+    font-size: 26px;
     display: inline-block;
     width: 60px;
 }
@@ -75,6 +75,9 @@ a.w400 {
 .target .hdv {
     width: 40px;
     height: 40px;
+}
+.target .result .glyphicon {
+    vertical-align: top;
 }
 
 .form-horizontal .radio {
@@ -137,6 +140,22 @@ a.w400 {
 #targetattack {
     width: 400px !important;
 }
+#resultattack {
+    width: 500px !important;
+}
+#resultattack div.col-sm-6 {
+    text-align: left;
+}
+#resultattack div.col-sm-6 input[type=number] {
+    display: inline-block;
+}
+
+#targethdv {
+    width: 300px;
+}
+#targethdv #target_hdv_hdv {
+    margin: auto;
+}
 
 .attack {
     display: inline-block;
@@ -150,6 +169,13 @@ a.w400 {
 .attack .delete {
     cursor: pointer;
     color:red;
+}
+.attack p {
+    margin: 0;
+}
+.attack span.timer {
+    vertical-align: top;
+    line-height: 16px;
 }
 
 #target_comment #input-image {
