@@ -124,6 +124,7 @@
                     var bool = countdown(dateEnd, id);
                     if(!bool) {
                         $(id).html("Expiré");
+                        $(id).parent().css("color","red");
                     }
                     return bool;
                 }
