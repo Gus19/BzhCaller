@@ -228,10 +228,18 @@ class WarController extends Controller
     
     public function resultAttackAction($code, Attack $attack, Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $attack->setDateResult(new \DateTime());
         $form = $this->get('form.factory')->create(ResultAttackType::class, $attack);
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            if($attack->getStars() >= 0 && $attack->getStars() <= 3) {
+              $attack->setDateResult(new \DateTime());
+            }
+            else {
+              $attack->setDateResult(null);
+              $attack->setDestruction(null);
+              $attack->setStars(null);
+            }
+          
             $em->flush();
             return $this->redirectToRoute('war_code', array(
                 'code' => $code
