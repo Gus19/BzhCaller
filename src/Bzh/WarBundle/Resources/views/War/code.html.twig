@@ -49,7 +49,7 @@
                         <i class="glyphicon glyphicon-remove delete" title="Supprimer la réservation" onclick="deleteAttack({{ a.id }})"></i>
                     </p>
                     <p class="result pointer" onclick="setResultAttack({{ a.id }},'{{ a.stars }}','{{ a.destruction }}')">
-                        {% if a.dateResult %}
+                        {% if a.dateResult and a.stars %}
                             {% if a.stars > 0 %}
                                 {% for i in 1..a.stars %}
                                     <i class="glyphicon glyphicon-star" title="{{a.destruction}}% de destruction"></i>

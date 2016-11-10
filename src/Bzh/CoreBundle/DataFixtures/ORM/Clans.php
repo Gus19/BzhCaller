@@ -33,7 +33,7 @@ class Clans extends AbstractFixture implements OrderedFixtureInterface, Containe
 
 <p style="text-align:center"><span style="font-size:16px">Apr&eacute;s votre attaque notez votre score avec le bouton sous votre pseudo.</span></p>
 
-<p style="text-align:center"><span style="font-size:16px">1&egrave;re attaque en respectant le &quot;timer&quot; de 6h00 autant que possible, et en tout &eacute;tat de cause AVANT MIDI (sinon votre cible devient dispo pour un autre joueur).</span></p>
+<p style="text-align:center"><span style="font-size:16px">1&egrave;re attaque en respectant le &quot;timer&quot; de 3h autant que possible, et en tout &eacute;tat de cause AVANT MIDI (sinon votre cible devient dispo pour un autre joueur).</span></p>
 
 <p style="text-align:center"><span style="font-size:16px">R&eacute;servez votre 2&egrave;me attaque avec le bouton + (choisissez une cible o&ugrave; vous &ecirc;tes en mesure de faire 3 &eacute;toiles, on ne pense pas butin !!!)</span></p>
 
@@ -59,7 +59,7 @@ class Clans extends AbstractFixture implements OrderedFixtureInterface, Containe
         $skol->setTag("#9QPYC90P");
         $em->persist($skol);
         
-        $vsclan = new Clan();
+        /*$vsclan = new Clan();
         $vsclan->setName("Dell Mazoo");
         $vsclan->setLevel(10);
         $vsclan->setType(2);
@@ -105,7 +105,7 @@ class Clans extends AbstractFixture implements OrderedFixtureInterface, Containe
         $war2->setSize(10);
         $war2->setVsClan($vsclan);
         $this->container->get('war.targets.create')->generate($war2, 10);
-        $em->persist($war2);
+        $em->persist($war2);*/
         
         $em->flush();
     }
