@@ -197,3 +197,13 @@ a.w400 {
 #target_comment_image {
     display: none;
 }
+
+@media (max-width: 600px) {
+    div.target {
+        text-align: center;
+    }
+    div.attack {
+        width: 100%;
+        text-align: center;
+    }
+}
