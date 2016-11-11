@@ -30,13 +30,16 @@ class BzhApiclashCommand extends ContainerAwareCommand
         $service = $this->getContainer()->get('api.clash');
         switch($mode) {
             case "clan":
-              $json = $service->GetClan($tag);
+                $json = $service->GetClan($tag);
+                $output->writeln(var_dump($json));
             break;
             case "members":
-              $json = $service->GetClanMembers($tag);
+                $json = $service->GetClanMembers($tag);
+                $output->writeln(var_dump($json));
             break;
             case "warlog":
-              $json = $service->GetClanWarLog($tag);
+                $json = $service->GetClanWarLog($tag);
+                $output->writeln(var_dump($json));
             break;
             default:
                 $output->writeln('<error>Mode non pris en charge</error>');
