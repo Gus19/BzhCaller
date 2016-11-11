@@ -5,6 +5,10 @@ home:
 map:
     path:     /map
     defaults: { _controller: BzhCoreBundle:Core:map }
+
+matchmaking:
+    path:     /matchmaking
+    defaults: { _controller: BzhCoreBundle:Core:matchmaking }    
     
 clan:
     path:     /{slug}

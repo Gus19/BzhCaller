@@ -94,8 +94,6 @@
     <div id="resultattack" class="jqmWindow center">
         {{ include("BzhWarBundle:War:resultAttack.html.twig") }}
     </div>
-        
-    {# include("BzhWarBundle:War:dump.html.twig") #}
 {% endblock %}
 
 {% block javascripts %}
@@ -106,6 +104,9 @@
 {% endblock %}    
 
 {% block twigjs %}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <script type="text/javascript">    
     var dateStart = '{{ war.dateStart|date('Y-m-d H:i:s') }}';
     var dateEnd = '{{ war.dateEnd|date('Y-m-d H:i:s') }}';
@@ -143,5 +144,17 @@
             });
         {% endfor %}
     {% endfor %}
+    
+    var players;
+    $( function() {
+        players = [
+          {% for m in members.items %}
+            "{{ m.name|raw }}",
+          {% endfor %}            
+        ];
+        $( "#target_attack_name" ).autocomplete({
+          source: players
+        });
+    });
 </script>
 {% endblock %}

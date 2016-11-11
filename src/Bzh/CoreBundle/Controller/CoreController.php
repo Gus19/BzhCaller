@@ -90,6 +90,8 @@ class CoreController extends Controller
         ));
     }
     
-    
-
+    public function matchmakingAction() {
+        return $this->render('BzhCoreBundle:Core:matchmaking.html.twig', array(
+        ));
+    }
 }

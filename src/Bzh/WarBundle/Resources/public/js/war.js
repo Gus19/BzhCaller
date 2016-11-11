@@ -126,3 +126,12 @@ function setResultAttack(attackid, stars, destruction) {
     $('#result_attack_destruction').val(destruction);
     $('#resultattack').jqmShow();
 }
+
+function checkReservation() {
+    if( players.indexOf( $("#target_attack_name").val() ) == -1) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}

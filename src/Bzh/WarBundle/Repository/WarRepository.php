@@ -39,4 +39,14 @@ class WarRepository extends \Doctrine\ORM\EntityRepository
         
         return $qb->getQuery()->getResult();
     }
+    
+    public function findWarAndBzhClanByCode($code) {
+        $qb = $this->createQueryBuilder('w');
+        
+        $qb
+            ->andWhere("w.code = :code")->setParameter(":code", $code)
+            ->innerJoin("w.bzhClan", "c")->addSelect("c");
+        
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

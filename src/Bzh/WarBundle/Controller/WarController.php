@@ -23,7 +23,7 @@ class WarController extends Controller
     public function codeAction($code, Request $request) {
         $em = $this->getDoctrine()->getManager();
         $rep = $em->getRepository("BzhWarBundle:War"); /* @var $rep WarRepository */
-        $war = $rep->findOneByCode($code); /* @var $war War */
+        $war = $rep->findWarAndBzhClanByCode($code); /* @var $war War */
         
         if($war == null) {
             $request->getSession()->getFlashBag()->add('error', 'Impossible de trouver la guerre correspondante au code "' . $code . '"');
@@ -39,6 +39,9 @@ class WarController extends Controller
         $formHdv = $this->get('form.factory')->create(TargetHdvType::class, new Target());
         $formResult = $this->get('form.factory')->create(ResultAttackType::class, new Attack());
         
+        $serviceApi = $this->get('api.clash');
+        $json = $serviceApi->GetClanMembers($war->getBzhClan()->getTag());
+        
         return $this->render('BzhWarBundle:War:code.html.twig', array(
             'war' => $war,
             'timeBejoreStart' => $service->calcTimeBeforeStart($war->getDateStart()),
@@ -47,7 +50,8 @@ class WarController extends Controller
             'form' => $form->createView(),
             'formAtt' => $formAtt->createView(),
             'formHdv' => $formHdv->createView(),
-            'formResult' => $formResult->createView()
+            'formResult' => $formResult->createView(),
+            'members' => $json
         ));
     }
     

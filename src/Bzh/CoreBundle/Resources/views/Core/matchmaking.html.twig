@@ -1,0 +1,40 @@
+{% extends "BzhCoreBundle::layout.html.twig" %}
+
+{% block body %}
+    <div id="chart_div"></div>
+{% endblock %}
+
+{% block twigjs %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawLineColors);
+
+    function drawLineColors() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'X');
+      data.addColumn('number', 'Idéal');
+      data.addColumn('number', 'Tolérable');
+      data.addColumn('number', 'Préma');
+
+      data.addRows([
+        [55, 10, 8, 5],
+        [60, 20, 15, 10],
+        [65, 30, 20, 15],
+      ]);
+
+      var options = {
+        hAxis: {
+          title: 'Poids de mon village (en K)\r\nQuantité d\'or pillable dans une attaque GDC'
+        },
+        vAxis: {
+          title: 'Héros combinés\r\nlvl roi+reine+gardien'
+        },
+        colors: ['#a52714', '#097138', '#00FF00']
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+</script>
+{% endblock %}

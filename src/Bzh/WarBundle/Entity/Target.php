@@ -84,6 +84,14 @@ class Target
         $this->dateCreation = new \Datetime();
     }
     
+    /*
+    * @ORM\PreUpdate()
+    */
+    public function preUpdate()
+    {
+        $this->dateMaj = new \DateTime();
+    }
+    
     /**
      * Get id
      *
