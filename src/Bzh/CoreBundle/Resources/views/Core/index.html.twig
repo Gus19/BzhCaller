@@ -37,13 +37,13 @@
     </p>
 {% endfor %}
 
-{% for c in clans %}
+{# for c in clans %}
     <p class="center col-md-4 col-md-offset-4">
         <a href="{{ path('clan_members', {'slug':c.slug}) }}" class="w400 btn btn-default">
           Joueurs {{ c.name }}
         </a>
     </p>
-{% endfor %}
+{% endfor #}
 
 
 {#<p class="center">

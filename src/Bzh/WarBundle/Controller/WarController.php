@@ -200,9 +200,14 @@ class WarController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $name = $attack->getName();
-        $postion = $attack->getTarget()->getPosition();
+        $target = $attack->getTarget();
+        $postion = $target->getPosition();
         
         $em->remove($attack);
+        $em->flush();
+        
+        $rep = $em->getRepository("BzhWarBundle:Attack"); /* @var $rep AttackRepository */
+        $rep->setMaxStarsTargetByTarget($target);
         $em->flush();
         
         $request->getSession()->getFlashBag()->add('info', 'La réservation pour '.$name.' sur la cible '.$postion.' a été supprimée');
@@ -239,6 +244,10 @@ class WarController extends Controller
               $attack->setDestruction(null);
               $attack->setStars(null);
             }
+            
+            $rep = $em->getRepository("BzhWarBundle:Attack"); /* @var $rep AttackRepository */
+            $rep->setMaxStarsTargetByAttack($attack);
+            $rep->setStarsWinByAttack($attack);
           
             $em->flush();
             return $this->redirectToRoute('war_code', array(

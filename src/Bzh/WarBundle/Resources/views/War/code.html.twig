@@ -4,16 +4,16 @@
     <h3>{{ war.bzhClan.name }} <span class="noclash">vs</span> {{ war.vsClan.name }}</h3>
     
     <div class="row" style="color:grey">
-        <p class="center col-md-4">
+        {#<p class="center col-md-4">
             Code : {{ war.code }}
-        </p>
-        <p class="center col-md-4">
+        </p>#}
+        <p class="center col-md-6">
             Début : {{ war.dateStart|date('d/m/Y H:i') }}
             {% if timeBejoreStart %}
                 (<span class="prepday"></span>)
             {% endif %}
         </p>
-        <p class="center col-md-4">
+        <p class="center col-md-6">
             Fin : {{ war.dateEnd|date('d/m/Y H:i') }}
             {% if timeBejoreEnd and not timeBejoreStart %}
                 (<span class="warday"></span>)
@@ -49,10 +49,18 @@
                         <i class="glyphicon glyphicon-remove delete" title="Supprimer la réservation" onclick="deleteAttack({{ a.id }})"></i>
                     </p>
                     <p class="result pointer" onclick="setResultAttack({{ a.id }},'{{ a.stars }}','{{ a.destruction }}')">
-                        {% if a.dateResult %}
+                        {% if a.dateResult is not null %}
                             {% if a.stars > 0 %}
                                 {% for i in 1..a.stars %}
-                                    <i class="glyphicon glyphicon-star" title="{{a.destruction}}% de destruction"></i>
+                                    {% set style = 'style="color:grey"' %}
+                                    {% if i == 1 and a.firstStarWin %}
+                                        {% set style = '' %}
+                                    {% elseif i == 2 and a.secondStarWin %}
+                                        {% set style = '' %}
+                                    {% elseif i == 3 and a.thirdStarWin %}
+                                        {% set style = '' %}
+                                    {% endif %}
+                                    <i class="glyphicon glyphicon-star" {{ style|raw }} title="{{a.destruction}}% de destruction"></i>
                                 {% endfor %}
                             {% endif %}
                             {% if a.stars < 3 %}
@@ -60,8 +68,6 @@
                                     <i class="glyphicon glyphicon-star-empty" title="{{a.destruction}}% de destruction"></i>
                                 {% endfor %}
                             {% endif %}
-                            {#<span class="noclash timer">{{ a.stars }}</span>
-                            <i class="glyphicon glyphicon-star" title="{{a.destruction}}% de destruction"></i>#}
                         {% elseif timeBejoreEnd and not timeBejoreStart %}
                             <i class="glyphicon glyphicon-time" title="Fin à {{ a.timerEnd|date('H') }}h{{ a.timerEnd|date('i') }}"></i>
                             <span class="noclash timer" id="timer{{ a.id }}"></span>

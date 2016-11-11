@@ -77,10 +77,27 @@ class Attack
     
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateResult;
+    
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $FirstStarWin;
+    
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $SecondStarWin;
+    
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $ThirdStarWin;
 
     public function __construct()
     {
@@ -95,6 +112,7 @@ class Attack
     public function getId()
     {
         return $this->id;
+        
     }
 
     /**
@@ -311,5 +329,77 @@ class Attack
     public function getDateResult()
     {
         return $this->dateResult;
+    }
+
+    /**
+     * Set firstStarWin
+     *
+     * @param boolean $firstStarWin
+     *
+     * @return Attack
+     */
+    public function setFirstStarWin($firstStarWin)
+    {
+        $this->FirstStarWin = $firstStarWin;
+
+        return $this;
+    }
+
+    /**
+     * Get firstStarWin
+     *
+     * @return boolean
+     */
+    public function getFirstStarWin()
+    {
+        return $this->FirstStarWin;
+    }
+
+    /**
+     * Set secondStarWin
+     *
+     * @param boolean $secondStarWin
+     *
+     * @return Attack
+     */
+    public function setSecondStarWin($secondStarWin)
+    {
+        $this->SecondStarWin = $secondStarWin;
+
+        return $this;
+    }
+
+    /**
+     * Get secondStarWin
+     *
+     * @return boolean
+     */
+    public function getSecondStarWin()
+    {
+        return $this->SecondStarWin;
+    }
+
+    /**
+     * Set thirdStarWin
+     *
+     * @param boolean $thirdStarWin
+     *
+     * @return Attack
+     */
+    public function setThirdStarWin($thirdStarWin)
+    {
+        $this->ThirdStarWin = $thirdStarWin;
+
+        return $this;
+    }
+
+    /**
+     * Get thirdStarWin
+     *
+     * @return boolean
+     */
+    public function getThirdStarWin()
+    {
+        return $this->ThirdStarWin;
     }
 }
