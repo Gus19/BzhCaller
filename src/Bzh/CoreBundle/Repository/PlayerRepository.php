@@ -10,4 +10,12 @@ namespace Bzh\CoreBundle\Repository;
  */
 class PlayerRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function setOldAllPlayers(\Bzh\CoreBundle\Entity\Clan $clan, $value) {
+        return $this->createQueryBuilder('u')
+            ->update()
+            ->set('u.old', ':old')
+                ->setParameter(":old", $value)
+            ->getQuery()->getSingleScalarResult();
+        
+    }
 }

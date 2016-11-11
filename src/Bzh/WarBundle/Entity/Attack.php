@@ -99,6 +99,13 @@ class Attack
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $ThirdStarWin;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="hdv", type="integer", nullable=true)
+     */
+    private $hdv;
 
     public function __construct()
     {

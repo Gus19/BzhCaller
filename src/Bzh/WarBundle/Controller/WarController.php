@@ -11,6 +11,7 @@ use Bzh\CoreBundle\Entity\Clan;
 use Bzh\WarBundle\Repository\WarRepository;
 use Bzh\WarBundle\Repository\TargetRepository;
 use Bzh\WarBundle\Repository\AttackRepository;
+use Bzh\CoreBundle\Repository\PlayerRepository;
 use Bzh\WarBundle\Form\WarType;
 use Bzh\CoreBundle\Form\ClanDescriptionType;
 use Bzh\WarBundle\Form\TargetCommentType;
@@ -39,8 +40,18 @@ class WarController extends Controller
         $formHdv = $this->get('form.factory')->create(TargetHdvType::class, new Target());
         $formResult = $this->get('form.factory')->create(ResultAttackType::class, new Attack());
         
-        $serviceApi = $this->get('api.clash');
-        $json = $serviceApi->GetClanMembers($war->getBzhClan()->getTag());
+        //$serviceApi = $this->get('api.clash');
+        //$members = $serviceApi->GetClanMembers($war->getBzhClan()->getTag());
+        $repPlayer = $em->getRepository("BzhCoreBundle:Player"); /* @var $rep PlayerRepository */
+        $members = $repPlayer->findBy(
+            array(
+                'old' => false,
+                'clan' => $war->getBzhClan()
+            ), 
+            array(
+                'name' => 'asc'
+            )
+        );
         
         return $this->render('BzhWarBundle:War:code.html.twig', array(
             'war' => $war,
@@ -51,7 +62,7 @@ class WarController extends Controller
             'formAtt' => $formAtt->createView(),
             'formHdv' => $formHdv->createView(),
             'formResult' => $formResult->createView(),
-            'members' => $json
+            'members' => $members
         ));
     }
     

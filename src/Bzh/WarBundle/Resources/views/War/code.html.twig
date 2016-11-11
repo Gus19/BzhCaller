@@ -148,7 +148,7 @@
     var players;
     $( function() {
         players = [
-          {% for m in members.items %}
+          {% for m in members %}
             "{{ m.name|raw }}",
           {% endfor %}            
         ];

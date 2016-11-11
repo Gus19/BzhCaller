@@ -35,7 +35,35 @@ class Player
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="hdv", type="integer", nullable=false)
+     */
+    private $hdv;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="string", length=255)
+     */
+    private $role;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="exp_level", type="integer", nullable=false)
+     */
+    private $expLevel;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="war_stars", type="integer", nullable=false)
+     */
+    private $warStars;
+    
     /**
      * @var \DateTime
      *
@@ -226,5 +254,101 @@ class Player
     public function getClan()
     {
         return $this->clan;
+    }
+
+    /**
+     * Set hdv
+     *
+     * @param integer $hdv
+     *
+     * @return Player
+     */
+    public function setHdv($hdv)
+    {
+        $this->hdv = $hdv;
+
+        return $this;
+    }
+
+    /**
+     * Get hdv
+     *
+     * @return integer
+     */
+    public function getHdv()
+    {
+        return $this->hdv;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     *
+     * @return Player
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Set expLevel
+     *
+     * @param integer $expLevel
+     *
+     * @return Player
+     */
+    public function setExpLevel($expLevel)
+    {
+        $this->expLevel = $expLevel;
+
+        return $this;
+    }
+
+    /**
+     * Get expLevel
+     *
+     * @return integer
+     */
+    public function getExpLevel()
+    {
+        return $this->expLevel;
+    }
+
+    /**
+     * Set warStars
+     *
+     * @param integer $warStars
+     *
+     * @return Player
+     */
+    public function setWarStars($warStars)
+    {
+        $this->warStars = $warStars;
+
+        return $this;
+    }
+
+    /**
+     * Get warStars
+     *
+     * @return integer
+     */
+    public function getWarStars()
+    {
+        return $this->warStars;
     }
 }

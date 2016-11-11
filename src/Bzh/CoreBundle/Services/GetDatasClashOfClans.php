@@ -38,6 +38,12 @@ class GetDatasClashOfClans {
         return $json;
     }
     
+    public function GetPlayer($tag) {
+        $requestUrl = $this->url . 'players/' . urlencode($tag);
+        $json = $this->GetJsonResponse($requestUrl);
+        return $json;
+    }
+    
     private function GetJsonResponse($requestUrl) {
         $headers = array(
             'Accept' => 'application/json',
