@@ -59,6 +59,7 @@ class AttackRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('a');
         $qb->where('a.target = :target');
         $qb->setParameter('target', $attack->getTarget());
+        $qb->andWhere('a.stars is not null');
         $qb->orderBy('a.stars', 'DESC');
         $qb->setMaxResults(1);
         
@@ -76,6 +77,7 @@ class AttackRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('a');
         $qb->where('a.target = :target');
         $qb->setParameter('target', $target);
+        $qb->andWhere('a.stars is not null');
         $qb->orderBy('a.stars', 'DESC');
         $qb->setMaxResults(1);
         
