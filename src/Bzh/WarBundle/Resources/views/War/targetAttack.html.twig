@@ -1,6 +1,6 @@
 {#<div id="targetcomment{{ target.id }}" class="jqmWindow center">#}
     <h4>Réserver cible #{#target.position#}</h4>
-    {{ form_start(formAtt, {'attr': {'id': 'target_attack', 'onsubmit':'return checkReservation()'}}) }}
+    {{ form_start(formAtt, {'attr': {'id': 'target_attack'}}) }} {#, 'onsubmit':'return checkReservation()'#}
     {{ form_errors(formAtt) }}
     {{ form_widget(formAtt.name) }}
     <br />
