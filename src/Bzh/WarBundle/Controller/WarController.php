@@ -62,7 +62,8 @@ class WarController extends Controller
             'formAtt' => $formAtt->createView(),
             'formHdv' => $formHdv->createView(),
             'formResult' => $formResult->createView(),
-            'members' => $members
+            'members' => $members,
+            'totalStars' => $repTarget->findTotalStars($war)
         ));
     }
     

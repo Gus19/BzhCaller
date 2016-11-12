@@ -25,6 +25,14 @@
     
     <hr/>
     
+    {% if totalStars %}
+        <div class="center">
+            {{ totalStars }}
+            <i class="glyphicon glyphicon-star"></i>
+            <hr />
+        </div>
+    {% endif %}
+    
     {% for t in targets %}
         
         {% set color = 'grey' %}

@@ -30,4 +30,14 @@ class TargetRepository extends \Doctrine\ORM\EntityRepository
         $qb->where('t.id = :id')->setParameter('id', $id);
         return $qb->getQuery()->getOneOrNullResult();
     }
+    
+    
+    public function findTotalStars(War $war) {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.war = :war')
+            ->setParameter('war', $war)
+            ->select('SUM(t.stars)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

@@ -207,6 +207,11 @@ ul.ui-autocomplete {
     font-family: "clash";
 }
 
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /*@media (max-width: 600px) {
     div.target {
         text-align: center;
