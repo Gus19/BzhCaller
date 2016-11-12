@@ -262,10 +262,12 @@ class WarController extends Controller
             }
             
             $rep = $em->getRepository("BzhWarBundle:Attack"); /* @var $rep AttackRepository */
-            $rep->setMaxStarsTargetByAttack($attack);
             $rep->setStarsWinByAttack($attack);
-          
             $em->flush();
+            
+            $rep->setMaxStarsTargetByAttack($attack);
+            $em->flush();
+            
             return $this->redirectToRoute('war_code', array(
                 'code' => $code
             ));

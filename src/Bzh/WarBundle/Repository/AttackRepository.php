@@ -57,19 +57,18 @@ class AttackRepository extends \Doctrine\ORM\EntityRepository
     
     public function setMaxStarsTargetByAttack(Attack $attack) {
         $qb = $this->createQueryBuilder('a');
-        $qb->where('a.id = :attack');
-        $qb->setParameter('attack', $attack->getId());
-        $qb->leftJoin("a.target", "t")->addSelect("t");
+        $qb->where('a.target = :target');
+        $qb->setParameter('target', $attack->getTarget());
         $qb->orderBy('a.stars', 'DESC');
         $qb->setMaxResults(1);
         
         $att = $qb->getQuery()->getOneOrNullResult(); /* @var $att Attack */
         
         if($att != null) {
-            $att->getTarget()->setStars( $att->getStars() );
+            $attack->getTarget()->setStars( $att->getStars() );
         }
         else {
-            $att->getTarget()->setStars(0);
+            $attack->getTarget()->setStars(0);
         }
     }
     
