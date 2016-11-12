@@ -46,7 +46,15 @@
             
             <img title="Modifier le niveau de l'hdv" class="hdv" src="{{ asset('bundles/bzhwar/img/hdv' ~ t.hdv ~ '.png') }}" title="HDV {{ t.hdv }}" onclick="changeHdv({{ t.id }}, {{ t.hdv }})"/>
             
-            <span class="big text-muted">{{ t.position }}.</span>
+            {% if t.stars is null %}
+                {% set text = 'text-muted' %}
+            {% elseif t.stars == 3 %}
+                {% set text = 'text-success' %}
+            {% elseif t.stars == 0 or t.stars == 1 or t.stars == 2 %}
+                {% set text = 'text-danger' %}
+            {% endif %}
+            
+            <span class="big {{ text }}">{{ t.position }}.</span>
             
             {% for a in t.attacks %}
                 <div class="attack">
