@@ -69,7 +69,7 @@ class AttackRepository extends \Doctrine\ORM\EntityRepository
             $attack->getTarget()->setStars( $att->getStars() );
         }
         else {
-            $attack->getTarget()->setStars(0);
+            $attack->getTarget()->setStars(null);
         }
     }
     
@@ -87,7 +87,7 @@ class AttackRepository extends \Doctrine\ORM\EntityRepository
             $target->setStars( $att->getStars() );
         }
         else {
-            $target->setStars(0);
+            $target->setStars(null);
         }
     }
     

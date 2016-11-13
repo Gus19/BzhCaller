@@ -68,15 +68,15 @@
                         {% if a.dateResult is not null %}
                             {% if a.stars > 0 %}
                                 {% for i in 1..a.stars %}
-                                    {% set style = 'style="color:grey"' %}
+                                    {% set style = 'fail' %}
                                     {% if i == 1 and a.firstStarWin %}
-                                        {% set style = '' %}
+                                        {% set style = 'win' %}
                                     {% elseif i == 2 and a.secondStarWin %}
-                                        {% set style = '' %}
+                                        {% set style = 'win' %}
                                     {% elseif i == 3 and a.thirdStarWin %}
-                                        {% set style = '' %}
+                                        {% set style = 'win' %}
                                     {% endif %}
-                                    <i class="glyphicon glyphicon-star" {{ style|raw }} title="{{a.destruction}}% de destruction"></i>
+                                    <i class="glyphicon glyphicon-star {{ style }}" title="{{a.destruction}}% de destruction"></i>
                                 {% endfor %}
                             {% endif %}
                             {% if a.stars < 3 %}

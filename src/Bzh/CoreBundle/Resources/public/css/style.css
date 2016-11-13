@@ -78,6 +78,13 @@ a.w400 {
 }
 .target .result .glyphicon {
     vertical-align: top;
+    font-size: 17px;
+}
+.target .result .glyphicon.win {
+    color: gold;
+}
+.target .result .glyphicon.fail {
+    color: silver;
 }
 
 .form-horizontal .radio {
