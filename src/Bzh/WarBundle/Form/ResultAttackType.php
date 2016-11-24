@@ -51,7 +51,8 @@ class ResultAttackType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Bzh\WarBundle\Entity\Attack'
+            'data_class' => 'Bzh\WarBundle\Entity\Attack',
+            'csrf_protection' => false
         ));
     }
 }
