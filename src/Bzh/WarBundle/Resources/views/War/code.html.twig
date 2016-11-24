@@ -22,7 +22,11 @@
     </div>
     
     {% if timeBejoreEnd or timeBejoreStart %}
-      {{ render(controller("BzhWarBundle:War:clanDescription", {'code': war.code })) }}
+        {{ render(controller("BzhWarBundle:War:clanDescription", {'code': war.code })) }}
+    {% elseif war.result is null  %}
+        <a href="{{ path('war_result', {'code':war.code}) }}" class="w400 btn btn-danger">
+            Noter le résultat de la guerre
+        </a>
     {% endif %}
     <hr/>
     

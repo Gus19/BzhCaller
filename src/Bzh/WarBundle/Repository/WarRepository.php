@@ -35,7 +35,8 @@ class WarRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere("w.bzhClan = :clan")->setParameter(":clan", $clan)
             ->innerJoin("w.bzhClan", "c")->addSelect("c")
             ->innerJoin("w.vsClan", "v")->addSelect("v")
-            ->andWhere('w.dateEnd < :now')->setParameter('now', new \Datetime());
+            ->andWhere('w.dateEnd < :now')->setParameter('now', new \Datetime())
+            ->orderBy('w.dateEnd', 'desc');
         
         return $qb->getQuery()->getResult();
     }

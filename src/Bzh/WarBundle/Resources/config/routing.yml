@@ -53,3 +53,7 @@ war_result_attack:
     defaults: { _controller: BzhWarBundle:War:resultAttack }
     options:
         expose: true
+
+war_result:
+    path:     /{code}/result
+    defaults: { _controller: BzhWarBundle:War:resultWar }

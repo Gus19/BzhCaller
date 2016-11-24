@@ -21,13 +21,14 @@ class ClanType extends AbstractType
                 'label' => 'Clan ennemi'
             ))          
             ->add('tag', TextType::class, array(
-                'label' => 'Tag Clan ennemi'
+                'label' => 'Tag Clan ennemi',
+                'required' => false
             ))
             ->add('level', IntegerType::class, array(
                 'label' => 'Niveau clan ennemi',
-                'scale' => 0
+                'scale' => 0,
+                'required' => false
             ))
-            
         ;
     }
     

@@ -18,6 +18,7 @@ use Bzh\WarBundle\Form\TargetCommentType;
 use Bzh\WarBundle\Form\TargetAttackType;
 use Bzh\WarBundle\Form\TargetHdvType;
 use Bzh\WarBundle\Form\ResultAttackType;
+use Bzh\WarBundle\Form\ResultWarType;
 
 class WarController extends Controller
 {
@@ -252,13 +253,13 @@ class WarController extends Controller
         $form = $this->get('form.factory')->create(ResultAttackType::class, $attack);
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            if($attack->getStars() >= 0 && $attack->getStars() <= 3) {
-              $attack->setDateResult(new \DateTime());
+            if($attack->getStars() !== null && $attack->getStars() >= 0 && $attack->getStars() <= 3) {
+                $attack->setDateResult(new \DateTime());
             }
             else {
-              $attack->setDateResult(null);
-              $attack->setDestruction(null);
-              $attack->setStars(null);
+                $attack->setDateResult(null);
+                $attack->setDestruction(null);
+                $attack->setStars(null);
             }
             
             $rep = $em->getRepository("BzhWarBundle:Attack"); /* @var $rep AttackRepository */
@@ -272,8 +273,10 @@ class WarController extends Controller
                 'code' => $code
             ));
         }
-        
-        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+        //throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+        return $this->render('BzhWarBundle:War:resultAttack.html.twig', array(
+            'formResult' => $form->createView()
+        ));
     }
     
     public function targetHdvAction($code, Target $target, Request $request) {
@@ -288,5 +291,21 @@ class WarController extends Controller
             ));
         }
         throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
+    
+    public function resultWarAction(War $war, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('form.factory')->create(ResultWarType::class, $war);
+        
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em->flush();
+            return $this->redirectToRoute('clan_warlog', array(
+                'slug' => $war->getBzhClan()->getSlug()
+            ));
+        }
+        return $this->render('BzhWarBundle:War:resultWar.html.twig', array(
+            'war' => $war,
+            'form' => $form->createView()
+        ));
     }
 }

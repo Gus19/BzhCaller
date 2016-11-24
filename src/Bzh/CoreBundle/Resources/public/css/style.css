@@ -81,7 +81,6 @@ a.w400 {
     font-size: 17px;
 }
 .target .result .glyphicon.win {
-    //color: gold;
 }
 .target .result .glyphicon.fail {
     color: silver;

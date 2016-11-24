@@ -45,18 +45,11 @@ class WarType extends AbstractType
                 'choices' => array(
                     'Début dans' => 'start', 
                     'Fin dans' => 'end'
-                ),
-                //'data' => 'start'
+                )
             ))
             ->add('timeTo', TimeType::class, array(
                 'label' => ''
             ))
-            /*->add('timeToEnd', TimeType::class, array(
-                'label' => false,
-                'mapped' => false
-            ))*/
-            //->add('dateStart', DateTimeType::class)
-            //->add('dateEnd', DateTimeType::class)
             ->add('bzhClan', EntityType::class, array(
                 'class' => 'BzhCoreBundle:Clan',
                 'query_builder' => function (ClanRepository $er) {
@@ -67,19 +60,6 @@ class WarType extends AbstractType
             ->add('vsClan', ClanType::class, array(
                 'label' => false
             ))
-            /*->add('vsClanText', TextType::class, array(
-                'label' => 'Clan ennemi',
-                'mapped' => false
-            ))          
-            ->add('vsClanTag', TextType::class, array(
-                'label' => 'Tag Clan ennemi',
-                'mapped' => false
-            ))
-            ->add('vsClanLevel', IntegerType::class, array(
-                'label' => 'Niveau clan ennemi',
-                'scale' => 0,
-                'mapped' => false
-            ))*/
             ->add('enregistrer', SubmitType::class, array(
                 'label' => '',
                 'attr' => array('class' => 'btn-primary'),
