@@ -1,19 +1,19 @@
 {% extends "BzhCoreBundle::layout.html.twig" %}
 
-{# block body %}
-    <h2>Guerres passées de {{ clan.name }}</h2>
-    
-    {{ dump(test) }}
-    
-    {# for f in files %}
-        {{ dump(f) }}
-    {% endfor }
-    
-{% endblock #}
-
-
 {% block body %}
     <h3>Historique des guerres de {{ clan.name }}</h3>
+    
+    <div class="row">
+        <p class="center col-md-4">
+            <a href="#" class="text-success" onclick="showResult('V')">{{ cwin }} victoires</a>
+        </p>
+        <p class="center col-md-4">
+            <a href="#" class="text-danger" onclick="showResult('D')">{{ cloo }} défaites</a>
+        </p>
+        <p class="center col-md-4">
+            <a href="#" class="text-muted" onclick="showResult('N')">{{ cnul }} égalités</a>
+        </p>
+    </div>
     
     {% for w in wars %}
         {% set classBzh = '' %}
@@ -30,7 +30,7 @@
             {% set classVs = 'text-muted' %}
         {% endif %}
 
-        <div class="resultWar">
+        <div class="resultWar res_{{ w.result }}">
             <div class="bzhClan {{ classBzh }}">
                 <p>{{ w.bzhClan.name }}</p>
                 <p class="noclash s15">
@@ -49,6 +49,14 @@
                 </p>
             </div>
         </div>
-    {% endfor %}
-    
+    {% endfor %}    
+{% endblock %}
+
+{% block twigjs %}
+<script type="text/javascript">
+    function showResult(code) {
+        $('.resultWar').hide();
+        $('.res_' + code).show();
+    }
+</script>
 {% endblock %}

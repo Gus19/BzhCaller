@@ -58,29 +58,35 @@ class CoreController extends Controller
     
     public function warlogAction(Clan $clan)
     {
-        /* @var $service GetDatasClashOfClans
-        $service = $this->get('api.clash');
+        $em = $this->getDoctrine()->getManager();
+        /* @var $repWar \Bzh\WarBundle\Repository\WarRepository */
+        $repWar = $em->getRepository("BzhWarBundle:War");
+        $wars = $repWar->getPastWars($clan);        
         
-        $finder = new Finder();
-        $finder->files()->in($this->get('kernel')->getRootDir() . "/../var/jsonclash")->name('*.json');
-        foreach ($finder as $file) {
-            $test = $data = json_decode($file->getContents(), true);
+        $cwin = 0;
+        $cnul = 0;
+        $cloo = 0;
+        foreach ($wars as $w) {
+            /* @var $w \Bzh\WarBundle\Entity\War */
+            switch ($w->getResult()) {
+                case 'V':
+                    $cwin++;
+                    break;
+                case 'N':
+                    $cnul++;
+                    break;
+                case 'D':
+                    $cloo++;
+                    break;
+            }
         }
         
         return $this->render('BzhCoreBundle:Core:warlog.html.twig', array(
             'clan' => $clan,
-            'json' => $service->GetClanWarLog($clan->getTag()),
-            'files'=> $finder,
-            'test' => $test
-        ));*/
-        
-        $em = $this->getDoctrine()->getManager();
-        $repWar = $em->getRepository("BzhWarBundle:War");
-        $wars = $repWar->getPastWars($clan);
-        
-        return $this->render('BzhCoreBundle:Core:warlog.html.twig', array(
-            'clan' => $clan,
-            'wars' => $wars
+            'wars' => $wars,
+            'cwin' => $cwin,
+            'cnul' => $cnul,
+            'cloo' => $cloo,
         ));
     }
     
