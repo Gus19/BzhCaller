@@ -12,6 +12,7 @@ class WarRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
      * Retourne les guerres non commencées ou non terminées
+     * @return Result
      */
     public function getCurrentWars() {
         $qb = $this->createQueryBuilder('w');
@@ -26,7 +27,9 @@ class WarRepository extends \Doctrine\ORM\EntityRepository
     }
     
     /**
-     * Retourne les guerres non commencées ou non terminées
+     * Retourne les guerres terminées
+     * @param \Bzh\CoreBundle\Entity\Clan $clan
+     * @return Result
      */
     public function getPastWars(\Bzh\CoreBundle\Entity\Clan $clan) {
         $qb = $this->createQueryBuilder('w');
@@ -41,6 +44,11 @@ class WarRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
     
+    /**
+     * Retourne la guerre correspondante au code
+     * @param string $code
+     * @return OneOrNullResult
+     */
     public function findWarAndBzhClanByCode($code) {
         $qb = $this->createQueryBuilder('w');
         
@@ -49,5 +57,24 @@ class WarRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin("w.bzhClan", "c")->addSelect("c");
         
         return $qb->getQuery()->getOneOrNullResult();
+    }
+    
+    
+    public function getStatsPastWars(\Bzh\CoreBundle\Entity\Clan $clan, $groupByResult) {
+        $qb = $this->createQueryBuilder('w')
+            ->andWhere('w.dateEnd < :now')->setParameter('now', new \Datetime())
+            ->andWhere("w.bzhClan = :clan")->setParameter(":clan", $clan)
+            ->andWhere("w.result is not null")                
+            ->select('w.size')->groupBy('w.size')->orderBy('w.size')
+            ->addselect('count(w.id) as counts')
+            ->addSelect('min(w.starsBzh) as minstarsbzh')->addSelect('max(w.starsBzh) as maxstarsbzh')->addSelect('avg(w.starsBzh) as avgstarsbzh')
+            ->addSelect('min(w.starsVs) as minstarsvs')->addSelect('max(w.starsVs) as maxstarsvs')->addSelect('avg(w.starsVs) as avgstarsvs')
+            ->addSelect('min(w.destructionBzh) as mindestructionbzh')->addSelect('max(w.destructionBzh) as maxdestructionbzh')->addSelect('avg(w.destructionBzh) as avgdestructionbzh')
+            ->addSelect('min(w.destructionVs) as mindestructionvs')->addSelect('max(w.destructionVs) as maxdestructionvs')->addSelect('avg(w.destructionVs) as avgdestructionvs');
+        
+        if($groupByResult) {
+            $qb->addselect('w.result')->addGroupBy('w.result');   
+        }        
+        return $qb->getQuery()->getResult();
     }
 }

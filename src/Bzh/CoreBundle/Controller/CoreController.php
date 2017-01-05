@@ -45,14 +45,23 @@ class CoreController extends Controller
     
     public function membersAction(Clan $clan)
     {
-        /* @var $service GetDatasClashOfClans */
-        $service = $this->get('api.clash');
+        $em = $this->getDoctrine()->getManager();
+        $rep = $em->getRepository("BzhCoreBundle:Player");/* @var $rep \Bzh\CoreBundle\Repository\PlayerRepository */
+        $members = $rep->getPlayers($clan, false);
+        $olders = $rep->getPlayers($clan, true);
         
-        //return $this->json($service->GetClanMembers($clan->getTag()));
+        $grades = array(
+            'leader' => 'Chef',
+            'coLeader' => 'Chef adjoint',
+            'admin' => 'Ainé',
+            'member' => 'Membre'
+        );
         
         return $this->render('BzhCoreBundle:Core:members.html.twig', array(
             'clan' => $clan,
-            'json' => $service->GetClanMembers($clan->getTag())
+            'members' => $members,
+            'olders' => $olders,
+            'grades' => $grades
         ));
     }
     
@@ -91,8 +100,17 @@ class CoreController extends Controller
     }
     
     public function statsAction(Clan $clan) {
+        
+        $em = $this->getDoctrine()->getManager();
+        /* @var $repWar \Bzh\WarBundle\Repository\WarRepository */
+        $repWar = $em->getRepository("BzhWarBundle:War");
+        $total = $repWar->getStatsPastWars($clan, false);
+        $details = $repWar->getStatsPastWars($clan, true);
+        
         return $this->render('BzhCoreBundle:Core:stats.html.twig', array(
-            'clan' => $clan
+            'clan' => $clan,
+            'total' => $total,
+            'details' => $details,
         ));
     }
     

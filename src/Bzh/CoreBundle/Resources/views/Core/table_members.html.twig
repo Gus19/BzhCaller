@@ -1,0 +1,28 @@
+<div id="{{ id }}" class="table-responsive noclash">
+    <table class="table table-bordered table-striped table-condensed" style="width: 100%">
+        <thead>
+            <tr>
+                <td>#</td>
+                <td>Nom</td>
+                <td>HDV</td>
+                <td>Grade</td>
+                <td>Niveau</td>
+                <td>Etoiles de guerre</td>
+                <td>Record trophés</td>                
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in players %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.hdv }}</td>
+                    <td>{{ grades[p.role] }}</td>
+                    <td>{{ p.expLevel }}</td>
+                    <td>{{ p.warStars }}</td>
+                    <td>{{ p.bestTrophies }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

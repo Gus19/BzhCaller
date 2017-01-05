@@ -3,11 +3,49 @@
 {% block body %}
     <h2>Liste des joueurs de {{ clan.name }}</h2>
     
-    {# <ul>
-      {% for m in json.items %}
-        <li>{{ m.tag }} {{ m.name }} {{ m.role }}</li>
-      {% endfor %}
-    </ul> #}
+    <p style="margin: 0">
+        Membres actuels
+        <a href="#" onclick="showOlders()" style="float:right">Voir les anciens membres</a>
+    </p>
+    {% include 'BzhCoreBundle:Core:table_members.html.twig' with {
+        'id':'members', 
+        'players': members 
+    } %}
     
-    {# dump(json) #}
+    <div class="olders" style="display:none">
+        <p style="margin: 15px 0 0 0;">Anciens membres</p>
+        {% include 'BzhCoreBundle:Core:table_members.html.twig' with {
+            'id':'olders', 
+            'players': olders
+        } %}
+    </div>
+    
+{% endblock %}
+
+{% block twigjs %}
+<script type="text/javascript">
+    var params = {
+        paging: false,
+        searching: false,
+        info: false,
+        "columnDefs": [
+            { "orderable": false, "targets": 1 }
+        ]
+    }
+    $(document).ready(function() {
+        $('#members table').DataTable(params);
+    });
+    
+    var sold = false;
+    function showOlders() {
+        if(!sold) {
+            $('#olders table').DataTable(params);
+            sold = true;
+        }
+        $('div.olders').show();
+        $("html, body").animate({
+            scrollTop: $('div.olders').offset().top 
+        });
+    }
+</script>
 {% endblock %}

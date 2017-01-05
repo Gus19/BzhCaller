@@ -27,13 +27,16 @@ class BzhMajPlayersCommand extends ContainerAwareCommand
         
         $clans = $repClan->findByType(1);
         foreach ($clans as $clan) { /* @var $clan \Bzh\CoreBundle\Entity\Clan */
-            $output->writeln("Recherche pour le clan " . $clan->getName() . " - " . $clan->getTag());
+            //$output->writeln("Recherche pour le clan " . $clan->getName() . " - " . $clan->getTag());
+            $this->logOutput($output, "Recherche pour le clan " . $clan->getName() . " - " . $clan->getTag());
             
             $repPlayer->setOldAllPlayers($clan, 1);
             
             $clanApi = json_decode(json_encode($service->GetClanMembers($clan->getTag())), True); //Pour transformer les stdClass en Array
             foreach ($clanApi["items"] as $value) {
-                $output->writeln("    " . $value["name"] . " - " . $value["tag"]);
+                //$output->writeln("    " . $value["name"] . " - " . $value["tag"]);
+                $this->logOutput($output, "    " . $value["name"] . " - " . $value["tag"]);
+                
                 $playerApi = json_decode(json_encode($service->GetPlayer($value["tag"])), True);
                 
                 $player = $repPlayer->findOneByTag($value["tag"]);
@@ -49,10 +52,15 @@ class BzhMajPlayersCommand extends ContainerAwareCommand
                 $player->setExpLevel($playerApi["expLevel"]);
                 $player->setWarStars($playerApi["warStars"]);
                 $player->setRole($playerApi["role"]);
+                $player->setTrophies($playerApi["trophies"]);
+                $player->setBestTrophies($playerApi["bestTrophies"]);
                 $em->flush();
             }
         }
-        
+    }
+    
+    private function logOutput($output, $msg) {
+        $output->writeln("<info>". date("Y-m-d H:i:s") ."</info> " . $msg);
     }
 
 }

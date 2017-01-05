@@ -89,6 +89,20 @@ class Player
      */
     private $old;
     
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $trophies;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $bestTrophies;
+    
     public function __construct()
     {
         $this->dateCreation = new \Datetime();
@@ -350,5 +364,53 @@ class Player
     public function getWarStars()
     {
         return $this->warStars;
+    }
+
+    /**
+     * Set trophies
+     *
+     * @param integer $trophies
+     *
+     * @return Player
+     */
+    public function setTrophies($trophies)
+    {
+        $this->trophies = $trophies;
+
+        return $this;
+    }
+
+    /**
+     * Get trophies
+     *
+     * @return integer
+     */
+    public function getTrophies()
+    {
+        return $this->trophies;
+    }
+
+    /**
+     * Set bestTrophies
+     *
+     * @param integer $bestTrophies
+     *
+     * @return Player
+     */
+    public function setBestTrophies($bestTrophies)
+    {
+        $this->bestTrophies = $bestTrophies;
+
+        return $this;
+    }
+
+    /**
+     * Get bestTrophies
+     *
+     * @return integer
+     */
+    public function getBestTrophies()
+    {
+        return $this->bestTrophies;
     }
 }

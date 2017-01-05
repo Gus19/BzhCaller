@@ -10,6 +10,12 @@ namespace Bzh\CoreBundle\Repository;
  */
 class PlayerRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Change le champ OLD pour tous les PLAYER d'un CLAN
+     * @param \Bzh\CoreBundle\Entity\Clan $clan
+     * @param type $value
+     * @return type
+     */
     public function setOldAllPlayers(\Bzh\CoreBundle\Entity\Clan $clan, $value) {
         return $this->createQueryBuilder('u')
             ->update()
@@ -18,6 +24,17 @@ class PlayerRepository extends \Doctrine\ORM\EntityRepository
             ->set('u.old', ':old')
                 ->setParameter(":old", $value)
             ->getQuery()->getSingleScalarResult();
-        
+    }
+    
+    public function getPlayers(\Bzh\CoreBundle\Entity\Clan $clan, $value) {
+        return 
+            $this->findBy(array(
+                'clan' => $clan,
+                'old' => $value
+            ), array(
+                'trophies' => 'desc',
+                'bestTrophies' => 'desc',
+                'name' => 'asc'
+            ));
     }
 }
