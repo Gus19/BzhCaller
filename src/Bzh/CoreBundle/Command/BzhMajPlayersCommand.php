@@ -21,7 +21,7 @@ class BzhMajPlayersCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $service = $this->getContainer()->get('api.clash'); /* @var $service \Bzh\CoreBundle\Services\GetDatasClashOfClans */
-        $em = $this->getContainer()->get('doctrine')->getEntityManager(); /* @var $em \Doctrine\ORM\EntityManager */
+        $em = $this->getContainer()->get('doctrine')->getManager(); /* @var $em \Doctrine\ORM\EntityManager */
         $repClan = $em->getRepository("BzhCoreBundle:Clan"); /* @var $repClan \Bzh\CoreBundle\Repository\ClanRepository */
         $repPlayer = $em->getRepository("BzhCoreBundle:Player"); /* @var $repPlayer \Bzh\CoreBundle\Repository\PlayerRepository */
         

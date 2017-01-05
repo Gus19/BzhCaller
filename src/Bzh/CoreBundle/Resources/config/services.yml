@@ -2,5 +2,5 @@ services:
     api.clash:
         class: Bzh\CoreBundle\Services\GetDatasClashOfClans
         arguments:
-            - token_api_clash
+            - %token_api_clash%
             - "https://api.clashofclans.com/v1/"
