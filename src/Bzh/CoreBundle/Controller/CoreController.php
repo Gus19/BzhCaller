@@ -104,13 +104,11 @@ class CoreController extends Controller
         $em = $this->getDoctrine()->getManager();
         /* @var $repWar \Bzh\WarBundle\Repository\WarRepository */
         $repWar = $em->getRepository("BzhWarBundle:War");
-        $total = $repWar->getStatsPastWars($clan, false);
-        $details = $repWar->getStatsPastWars($clan, true);
+        $stats = $repWar->getStatsPastWars($clan);
         
         return $this->render('BzhCoreBundle:Core:stats.html.twig', array(
             'clan' => $clan,
-            'total' => $total,
-            'details' => $details,
+            'stats' => $stats
         ));
     }
     

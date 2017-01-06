@@ -93,13 +93,13 @@ class War
     
     /**
      * @var decimal
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $destructionBzh = 0;
     
     /**
      * @var decimal
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $destructionVs = 0;
     

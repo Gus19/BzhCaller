@@ -60,7 +60,25 @@ class WarRepository extends \Doctrine\ORM\EntityRepository
     }
     
     
-    public function getStatsPastWars(\Bzh\CoreBundle\Entity\Clan $clan, $groupByResult) {
+    public function getStatsPastWars(\Bzh\CoreBundle\Entity\Clan $clan) {
+        $total = $this->detailforstat($clan, false);
+        $details = $this->detailforstat($clan, true);
+        
+        $stats = array();
+        
+        foreach ($details as $key => $value) {
+            if(!array_key_exists($value["size"], $stats)) {
+                $stats[$value["size"]] = array();
+            }
+            array_push($stats[$value["size"]], $value);
+        }
+        foreach ($total as $key => $value) {
+            array_push($stats[$value["size"]], $value);
+        }
+        return $stats;        
+    }
+    
+    private function detailforstat(\Bzh\CoreBundle\Entity\Clan $clan, $groupByResult) {
         $qb = $this->createQueryBuilder('w')
             ->andWhere('w.dateEnd < :now')->setParameter('now', new \Datetime())
             ->andWhere("w.bzhClan = :clan")->setParameter(":clan", $clan)
@@ -73,8 +91,9 @@ class WarRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('min(w.destructionVs) as mindestructionvs')->addSelect('max(w.destructionVs) as maxdestructionvs')->addSelect('avg(w.destructionVs) as avgdestructionvs');
         
         if($groupByResult) {
-            $qb->addselect('w.result')->addGroupBy('w.result');   
-        }        
-        return $qb->getQuery()->getResult();
+            $qb->addselect('w.result')->addGroupBy('w.result');
+        }
+        
+        return $qb->getQuery()->getResult();         
     }
 }

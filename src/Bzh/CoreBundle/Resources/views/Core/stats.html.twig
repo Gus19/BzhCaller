@@ -2,7 +2,65 @@
 
 {% block body %}
     <h3>Statistiques de {{ clan.name }}</h3>
-    
-    <p>{{ dump(total) }}</p>
-    
+    {% for size in stats|keys %}
+    <p>GDC à {{ size }}</p>
+    <table class="table table-bordered table-striped table-condensed noclash" style="width: 100%">
+        <thead>
+            <tr>
+                <th rowspan="2"></th>
+                <th rowspan="2">Nb</th>
+                <th colspan="6">BZH</th>
+                <th colspan="6">Ennemi</th>
+            </tr>
+            <tr>
+                {# BZH #}
+                <th>Moyenne <i class="glyphicon glyphicon-star"></i></th>
+                <th>Max <i class="glyphicon glyphicon-star"></i></th>
+                <th>Min <i class="glyphicon glyphicon-star"></i></th>
+                <th>Moyenne %</th>
+                <th>Max %</th>
+                <th>Min %</th>
+                {# Ennemi #}
+                <th>Moyenne <i class="glyphicon glyphicon-star"></i></th>
+                <th>Max <i class="glyphicon glyphicon-star"></i></th>
+                <th>Min <i class="glyphicon glyphicon-star"></i></th>
+                <th>Moyenne %</th>
+                <th>Max %</th>
+                <th>Min %</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in stats[size] %}
+                <tr>
+                    <td>
+                        {% if s.result is not defined %}
+                            Total
+                        {% elseif s.result=='V'  %}
+                            Victoires
+                        {% elseif s.result=='D'  %}
+                            Défaites
+                        {% elseif s.result=='V'  %}
+                            Nuls
+                        {% endif %}
+                    </td>
+                    <td>{{ s.counts }}</td>
+                    {# BZH #}
+                    <td>{{ s.avgstarsbzh|number_format(2, '.', ' ') }}</td>
+                    <td>{{ s.maxstarsbzh }}</td>
+                    <td>{{ s.minstarsbzh }}</td>
+                    <td>{{ s.avgdestructionbzh|number_format(2, '.', ' ') }}</td>
+                    <td>{{ s.maxdestructionbzh }}</td>
+                    <td>{{ s.mindestructionbzh }}</td>
+                    {# Ennemi #}
+                    <td>{{ s.avgstarsvs|number_format(2, '.', ' ') }}</td>
+                    <td>{{ s.maxstarsvs }}</td>
+                    <td>{{ s.minstarsvs }}</td>
+                    <td>{{ s.avgdestructionvs|number_format(2, '.', ' ') }}</td>
+                    <td>{{ s.maxdestructionvs }}</td>
+                    <td>{{ s.mindestructionvs }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endfor %}
 {% endblock %}
