@@ -43,9 +43,9 @@ class BzhMajPlayersCommand extends ContainerAwareCommand
                 if($player == null) {
                     $player = new \Bzh\CoreBundle\Entity\Player();
                     $player->setTag($playerApi["tag"]);
-                    $player->setName($playerApi["name"]);
                     $em->persist($player);
                 }
+                $player->setName($playerApi["name"]);
                 $player->setClan($clan);
                 $player->setHdv($playerApi["townHallLevel"]);
                 $player->setOld(0);
