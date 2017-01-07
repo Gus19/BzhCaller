@@ -9,6 +9,8 @@
                 <th>Niveau</th>
                 <th>Etoiles de guerre</th>
                 <th>Record trophés</th>                
+                <th>Poids de guerre</th>
+                <th>Puissance offensive *</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +23,8 @@
                     <td>{{ p.expLevel }}</td>
                     <td>{{ p.warStars }}</td>
                     <td>{{ p.bestTrophies }}</td>
+                    <td>{{ p.weight }}</td>
+                    <td>{{ p.offense }}</td>
                 </tr>
             {% endfor %}
         </tbody>

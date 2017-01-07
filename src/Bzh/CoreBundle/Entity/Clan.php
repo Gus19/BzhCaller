@@ -5,7 +5,7 @@ namespace Bzh\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
-
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * Clan
@@ -95,6 +95,11 @@ class Clan
      * @ORM\Column(name="tag", type="string", length=255, nullable=true)
      */
     private $tag;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Bzh\CoreBundle\Entity\Player", mappedBy="clan", cascade={"persist"})
+    */
+    private $members;
 
     public function __construct()
     {
@@ -335,5 +340,40 @@ class Clan
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Add member
+     *
+     * @param \Bzh\CoreBundle\Entity\Player $member
+     *
+     * @return Clan
+     */
+    public function addMember(\Bzh\CoreBundle\Entity\Player $member)
+    {
+        $this->members[] = $member;
+
+        return $this;
+    }
+
+    /**
+     * Remove member
+     *
+     * @param \Bzh\CoreBundle\Entity\Player $member
+     */
+    public function removeMember(\Bzh\CoreBundle\Entity\Player $member)
+    {
+        $this->members->removeElement($member);
+    }
+
+    /**
+     * Get members
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMembers()
+    {
+        $criteria = Criteria::create()->where(Criteria::expr()->eq("old", false))->orderBy(array("hdv"=>"desc", "name"=>"asc"));
+        return $this->members->matching($criteria);
     }
 }

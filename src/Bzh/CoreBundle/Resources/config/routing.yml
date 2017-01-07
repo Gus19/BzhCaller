@@ -17,6 +17,10 @@ clan:
 clan_members:
     path:     /{slug}/members
     defaults: { _controller: BzhCoreBundle:Core:members }
+
+clan_members_update:
+    path:     /{slug}/members/update
+    defaults: { _controller: BzhCoreBundle:Core:membersUpdate }
     
 clan_warlog:
     path:     /{slug}/warlog

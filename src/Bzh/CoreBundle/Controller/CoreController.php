@@ -6,7 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Bzh\CoreBundle\Entity\Clan;
 use Bzh\CoreBundle\Services\GetDatasClashOfClans;
-//use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Request;
+use Bzh\CoreBundle\Form\ClanMembersUpdateType;
 
 class CoreController extends Controller
 {
@@ -62,6 +63,20 @@ class CoreController extends Controller
             'members' => $members,
             'olders' => $olders,
             'grades' => $grades
+        ));
+    }
+    
+    public function membersUpdateAction(Clan $clan, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        
+        $form = $this->createForm(ClanMembersUpdateType::class, $clan);
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em->flush();
+        }
+        
+        return $this->render('BzhCoreBundle:Core:members_update.html.twig', array(
+            'clan' => $clan,
+            'form' => $form->createView(),
         ));
     }
     

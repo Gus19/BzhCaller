@@ -37,6 +37,13 @@ class Player
     private $name;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $forceName = false;
+    
+    /**
      * @var int
      *
      * @ORM\Column(name="hdv", type="integer", nullable=false)
@@ -79,7 +86,7 @@ class Player
     private $dateMaj;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bzh\CoreBundle\Entity\Clan", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Bzh\CoreBundle\Entity\Clan", inversedBy="members", cascade={"persist"})
      */
     private $clan;
     
@@ -102,6 +109,20 @@ class Player
      * @ORM\Column(type="integer", nullable=true)
      */
     private $bestTrophies;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $weight;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $offense;
     
     public function __construct()
     {
@@ -412,5 +433,80 @@ class Player
     public function getBestTrophies()
     {
         return $this->bestTrophies;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param integer $weight
+     *
+     * @return Player
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return integer
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * Set offense
+     *
+     * @param integer $offense
+     *
+     * @return Player
+     */
+    public function setOffense($offense)
+    {
+        $this->offense = $offense;
+
+        return $this;
+    }
+
+    /**
+     * Get offense
+     *
+     * @return integer
+     */
+    public function getOffense()
+    {
+        return $this->offense;
+    }
+
+    /**
+     * Set forceName
+     *
+     * @param boolean $forceName
+     *
+     * @return Player
+     */
+    public function setForceName($forceName)
+    {
+        $this->forceName = $forceName;
+
+        return $this;
+    }
+
+    /**
+     * Get forceName
+     *
+     * @return boolean
+     */
+    public function getForceName()
+    {
+        if($this->forceName == null) {
+            return false;
+        }
+        return $this->forceName;
     }
 }

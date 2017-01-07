@@ -45,7 +45,9 @@ class BzhMajPlayersCommand extends ContainerAwareCommand
                     $player->setTag($playerApi["tag"]);
                     $em->persist($player);
                 }
-                $player->setName($playerApi["name"]);
+                if(!$player->getForceName()) {
+                    $player->setName($playerApi["name"]);
+                }
                 $player->setClan($clan);
                 $player->setHdv($playerApi["townHallLevel"]);
                 $player->setOld(0);
@@ -54,6 +56,7 @@ class BzhMajPlayersCommand extends ContainerAwareCommand
                 $player->setRole($playerApi["role"]);
                 $player->setTrophies($playerApi["trophies"]);
                 $player->setBestTrophies($playerApi["bestTrophies"]);
+                $player->setOffense($this->calcOffense($playerApi));
                 $em->flush();
             }
         }
@@ -61,6 +64,20 @@ class BzhMajPlayersCommand extends ContainerAwareCommand
     
     private function logOutput($output, $msg) {
         $output->writeln("<info>". date("Y-m-d H:i:s") ."</info> " . $msg);
+    }
+    
+    private function calcOffense($playerApi) {
+        $off = 0;
+        foreach ($playerApi['heroes'] as $value) {
+            $off += $value['level'];
+        }
+        foreach ($playerApi['troops'] as $value) {
+            $off += $value['level'];
+        }
+        foreach ($playerApi['spells'] as $value) {
+            $off += $value['level'];
+        }
+        return $off;
     }
 
 }
