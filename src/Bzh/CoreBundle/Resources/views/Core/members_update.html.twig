@@ -1,0 +1,23 @@
+{% extends "BzhCoreBundle::layout.html.twig" %}
+
+{% block body %}
+    <h2>{{ clan.name }}</h2>
+    
+    <div class="well">
+        {{ form_start(form) }}
+            {% for m in form.members %}
+                <div class="form-group">
+                    <label class="col-sm-3 control-label required">{{ m.vars.value.name }} (HDV {{ m.vars.value.hdv }})</label>
+                    <div class="col-sm-4 noclash">
+                        {{ form_row(m.weight) }}
+                    </div>
+                    <div class="col-sm-4 noclash">
+                        {{ form_row(m.offense) }}
+                    </div>
+                </div>
+            {% endfor %}
+        {{ form_end(form) }}
+        
+    </div>
+    
+{% endblock %}
