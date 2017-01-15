@@ -176,6 +176,16 @@
         $( "#target_attack_name" ).autocomplete({
           source: players
         });
+        
+        $("#result_attack_stars").change(changeDestruction);
+        $("#result_attack_stars").keyup(changeDestruction);
+        
     });
+    
+    function changeDestruction() {
+      if($("#result_attack_stars").val() == 3) {
+        $("#result_attack_destruction").val(100);
+      }
+    }
 </script>
 {% endblock %}
