@@ -38,7 +38,7 @@ class AttackRepository extends \Doctrine\ORM\EntityRepository
         
         $d = new \DateTime();
         
-        if($attack == null && $d->format('G') < 10 /*&& $d < $target->getWar()->getDateStart()*/) {
+        if($attack == null && $d < $target->getWar()->getDateStart()) {
             $end = $target->getWar()->getDateEnd();
             $start = $target->getWar()->getDateStart();
             if($start->format('G') < 12) {
