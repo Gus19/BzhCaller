@@ -48,7 +48,7 @@ class AttackRepository extends \Doctrine\ORM\EntityRepository
                 return $end->setTime(12, 00, 00);
             }
         }
-        else if($attack != null && $attack->getDateResult() == null) {
+        else if($attack != null && $attack->getDateResult() == null && $attack->getTimerEnd() > $d) {
             return $attack->getTimerEnd()->add(new \DateInterval("PT".$target->getWar()->getBzhClan()->getTimer()."H"));
         }
         
