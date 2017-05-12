@@ -101,8 +101,8 @@ class AttackRepository extends \Doctrine\ORM\EntityRepository
     $qb->leftJoin("a.target", "t")->addSelect("t");
     $qb->andWhere('a.target = :target');
     $qb->setParameter('target', $attack->getTarget());
-    $qb->andWhere('a.id < :attackid');
-    $qb->setParameter('attackid', $attack->getId());
+    $qb->andWhere('a.dateResult < :dateResult');
+    $qb->setParameter('dateResult', $attack->getDateResult());
     $qb->orderBy('a.stars', 'DESC');
     $qb->setMaxResults(1);
 
