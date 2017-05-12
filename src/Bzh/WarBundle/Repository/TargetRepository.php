@@ -19,6 +19,7 @@ class TargetRepository extends \Doctrine\ORM\EntityRepository
         $qb->where('t.war = :war');
         $qb->setParameter('war', $war);
         $qb->addOrderBy('t.position');
+        $qb->addOrderBy('a.dateResult');
         $qb->addOrderBy('a.dateCreation');
         return $qb->getQuery()->getResult();
     }
