@@ -28,6 +28,7 @@ class WarType extends AbstractType
                 'label' => 'Nombre de guerriers',
                 'placeholder' => 'choisissez ...',
                 'choices' => array(
+                    '5 VS 5' => 5, 
                     '10 VS 10' => 10, 
                     '15 VS 15' => 15, 
                     '20 VS 20' => 20, 
