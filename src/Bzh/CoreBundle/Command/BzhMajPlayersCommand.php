@@ -33,6 +33,7 @@ class BzhMajPlayersCommand extends ContainerAwareCommand
             $repPlayer->setOldAllPlayers($clan, 1);
             
             $clanApi = json_decode(json_encode($service->GetClanMembers($clan->getTag())), True); //Pour transformer les stdClass en Array
+
             foreach ($clanApi["items"] as $value) {
                 //$output->writeln("    " . $value["name"] . " - " . $value["tag"]);
                 $this->logOutput($output, "    " . $value["name"] . " - " . $value["tag"]);

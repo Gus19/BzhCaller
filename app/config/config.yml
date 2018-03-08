@@ -7,7 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
-    token_api_clash: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImEwOGIwY2QyLTNkN2MtNDQ2Yy1hNDZhLTUzNGU1NGU1M2IxYSIsImlhdCI6MTQ4MzYzODI4NSwic3ViIjoiZGV2ZWxvcGVyLzRlZTViYzAwLTU4M2ItMDM5NS0yZTA1LTQwYzYwYjgxOWJmOSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjIxNy43MC4xODAuMjI2IiwiODkuMy4yMzguMTEiLCIxODUuNzQuNDIuODIiLCI4Mi42Ni4xMTIuMzgiXSwidHlwZSI6ImNsaWVudCJ9XX0.O6bmyP3FoC5z5nYWjTniqfroQe4QyqWDiOTfOKGEgICXgf-HdzXrYyZrJ4nSpQcgdGrsb34ab4oQ5tAN52JqXg
+    token_api_clash: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjAyNmNmMTI1LWRiNDMtNDBkYS04ODAwLTY1MmY4MWZkMDQ1MyIsImlhdCI6MTUyMDM1NTYxMCwic3ViIjoiZGV2ZWxvcGVyLzRlZTViYzAwLTU4M2ItMDM5NS0yZTA1LTQwYzYwYjgxOWJmOSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE1NS4xMzMuMTM4LjY0Il0sInR5cGUiOiJjbGllbnQifV19.2U8srsXdTLiit-tfhjcy7QHVaw_ydLdx13apxBSDNi4Kj9SLDkNPmwjFRbToRTCDfKTiG_8zqV93VtmRFNvEPg
 
 framework:
     #esi:             ~
@@ -41,7 +41,7 @@ twig:
         - "BzhCoreBundle::bootstrap_4_horizontal_layout.html.twig"
     globals:
         webmaster: Gus
-        version: 0.0.1
+        version: 1
 
 # Doctrine Configuration
 doctrine:
