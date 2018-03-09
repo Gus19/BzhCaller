@@ -42,6 +42,7 @@ twig:
     globals:
         webmaster: Gus
         version: 1
+        email: webmaster@clashbzh.fr
 
 # Doctrine Configuration
 doctrine:
