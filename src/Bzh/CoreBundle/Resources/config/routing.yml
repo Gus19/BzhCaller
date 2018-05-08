@@ -10,9 +10,9 @@ matchmaking:
     path:     /matchmaking
     defaults: { _controller: BzhCoreBundle:Core:matchmaking }    
     
-clan:
-    path:     /{slug}
-    defaults: { _controller: BzhCoreBundle:Core:clan }
+#clan:
+#    path:     /{slug}
+#    defaults: { _controller: BzhCoreBundle:Core:clan }
     
 clan_members:
     path:     /{slug}/members
@@ -31,5 +31,5 @@ clan_stats:
     defaults: { _controller: BzhCoreBundle:Core:stats }
     
 clan_rules:
-    path:     /{slug}/regles
+    path:     /regles
     defaults: { _controller: BzhCoreBundle:Core:rules }

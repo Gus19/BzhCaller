@@ -128,11 +128,14 @@ class CoreController extends Controller
         ));
     }
     
-    public function rulesAction(Clan $clan, Request $request) {
+    public function rulesAction(Request $request) {
       $em = $this->getDoctrine()->getManager();
-      $form = $this->get('form.factory')->create(ClanRulesType::class, $clan, array(
-        'action' => $this->generateUrl('clan_rules', array('slug' => $clan->getSlug()))
-      ));
+      /* @var $repClan \Bzh\CoreBundle\Repository\ClanRepository */
+      $repClan = $em->getRepository("BzhCoreBundle:Clan");
+      $clan = $repClan->findOneBySlug("clash-bzh");
+		
+      $em = $this->getDoctrine()->getManager();
+      $form = $this->get('form.factory')->create(ClanRulesType::class, $clan);
       if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
         $em->flush();
       }
