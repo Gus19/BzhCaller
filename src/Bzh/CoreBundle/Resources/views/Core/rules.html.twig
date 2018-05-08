@@ -1,0 +1,43 @@
+{% extends "BzhCoreBundle::layout.html.twig" %}
+
+{% block body %}
+    <h2>Règles de {{ clan.name }}</h2>
+        
+    <div class="center noclash" id="context" data-toggle="context" data-target="#context-menu">
+      {% if not clan.rules %}
+        Clic droit pour modifier
+      {% else %}
+        {{ clan.rules|raw }}
+      {% endif %}
+    </div>
+      
+      
+    <div id="context-menu">
+        <a href="#" class="btn btn-default center dropdown-menu" role="menu" onclick="$('#clanform').jqmShow();">
+            Modifier
+        </a>
+    </div>
+
+    <div id="clanform" class="jqmWindow center">
+        <h4>Modification des règles</h4>
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form.rules) }}
+        <br />
+        {{ form_widget(form.enregistrer) }}
+        {{ form_widget(form.fermer) }}
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+      
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 'bundles/bzhwar/js/war.js' %}
+      <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+      $('#clanform').jqm({ onShow:screenCenter('#clanform') });
+    </script>
+{% endblock %}    

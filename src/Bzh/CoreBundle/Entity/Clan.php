@@ -100,6 +100,14 @@ class Clan
     * @ORM\OneToMany(targetEntity="Bzh\CoreBundle\Entity\Player", mappedBy="clan", cascade={"persist"})
     */
     private $members;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rules", type="text", nullable=true)
+     */
+    private $rules;
 
     public function __construct()
     {
@@ -375,5 +383,29 @@ class Clan
     {
         $criteria = Criteria::create()->where(Criteria::expr()->eq("old", false))->orderBy(array("hdv"=>"desc", "name"=>"asc"));
         return $this->members->matching($criteria);
+    }
+
+    /**
+     * Set rules
+     *
+     * @param string $rules
+     *
+     * @return Clan
+     */
+    public function setRules($rules)
+    {
+        $this->rules = $rules;
+
+        return $this;
+    }
+
+    /**
+     * Get rules
+     *
+     * @return string
+     */
+    public function getRules()
+    {
+        return $this->rules;
     }
 }

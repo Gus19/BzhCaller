@@ -30,4 +30,6 @@ clan_stats:
     path:     /{slug}/stats
     defaults: { _controller: BzhCoreBundle:Core:stats }
     
-    
+clan_rules:
+    path:     /{slug}/regles
+    defaults: { _controller: BzhCoreBundle:Core:rules }

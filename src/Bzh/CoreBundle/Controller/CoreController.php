@@ -8,6 +8,7 @@ use Bzh\CoreBundle\Entity\Clan;
 use Bzh\CoreBundle\Services\GetDatasClashOfClans;
 use Symfony\Component\HttpFoundation\Request;
 use Bzh\CoreBundle\Form\ClanMembersUpdateType;
+use Bzh\CoreBundle\Form\ClanRulesType;
 
 class CoreController extends Controller
 {
@@ -125,6 +126,20 @@ class CoreController extends Controller
             'clan' => $clan,
             'stats' => $stats
         ));
+    }
+    
+    public function rulesAction(Clan $clan, Request $request) {
+      $em = $this->getDoctrine()->getManager();
+      $form = $this->get('form.factory')->create(ClanRulesType::class, $clan, array(
+        'action' => $this->generateUrl('clan_rules', array('slug' => $clan->getSlug()))
+      ));
+      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        $em->flush();
+      }
+      return $this->render('BzhCoreBundle:Core:rules.html.twig', array(
+        'form'=> $form->createView(),
+        'clan' => $clan
+      ));
     }
     
     public function matchmakingAction() {
